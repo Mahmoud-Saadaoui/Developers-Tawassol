@@ -1,7 +1,4 @@
 node_modules
+dist
 .env
-
-node_modules/
-config/production.json
-client/build
-client/.eslintcache
+*.log
