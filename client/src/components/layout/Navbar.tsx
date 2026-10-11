@@ -1,18 +1,26 @@
-import { App as AntdApp, Button, Dropdown, Space } from 'antd';
-import { IdcardOutlined, LogoutOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { App as AntdApp, Button, Dropdown, Space, Tooltip } from 'antd';
+import {
+  BulbOutlined,
+  IdcardOutlined,
+  LogoutOutlined,
+  PlusOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLocale } from '../../context/LocaleContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const { locale, setLocale } = useLocale();
+  const { locale, setLocale, t } = useLocale();
+  const { isDark, toggle } = useTheme();
   const navigate = useNavigate();
   const { message } = AntdApp.useApp();
 
   const handleLogout = async () => {
     await logout();
-    message.success('Déconnecté');
+    message.success(t('nav.logout'));
     navigate('/');
   };
 
@@ -23,15 +31,15 @@ export default function Navbar() {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '12px 24px',
-        borderBottom: '1px solid #f0f0f0',
+        borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
       }}
     >
       <Space size={16}>
         <Link to="/" style={{ fontWeight: 700, fontSize: 18 }}>
-          Tawassol
+          {t('nav.brand')}
         </Link>
-        <Link to="/tags">Tags</Link>
-        <Link to="/users">Développeurs</Link>
+        <Link to="/tags">{t('nav.tags')}</Link>
+        <Link to="/users">{t('nav.users')}</Link>
       </Space>
 
       <Space>
@@ -39,11 +47,19 @@ export default function Navbar() {
           {locale === 'en' ? 'العربية' : 'EN'}
         </Button>
 
+        <Tooltip title={isDark ? t('nav.themeLight') : t('nav.themeDark')}>
+          <Button
+            icon={<BulbOutlined />}
+            onClick={toggle}
+            aria-label={isDark ? t('nav.themeLight') : t('nav.themeDark')}
+          />
+        </Tooltip>
+
         {user ? (
           <>
             <Link to="/ask">
               <Button type="primary" icon={<PlusOutlined />}>
-                Poser une question
+                {t('nav.ask')}
               </Button>
             </Link>
             <Dropdown
@@ -52,13 +68,13 @@ export default function Navbar() {
                   {
                     key: 'profile',
                     icon: <IdcardOutlined />,
-                    label: 'Mon profil',
+                    label: t('nav.myProfile'),
                     onClick: () => navigate('/dashboard'),
                   },
                   {
                     key: 'logout',
                     icon: <LogoutOutlined />,
-                    label: 'Se déconnecter',
+                    label: t('nav.logout'),
                     onClick: handleLogout,
                   },
                 ],
@@ -70,10 +86,10 @@ export default function Navbar() {
         ) : (
           <>
             <Link to="/login">
-              <Button>Se connecter</Button>
+              <Button>{t('nav.login')}</Button>
             </Link>
             <Link to="/register">
-              <Button type="primary">S'inscrire</Button>
+              <Button type="primary">{t('nav.register')}</Button>
             </Link>
           </>
         )}

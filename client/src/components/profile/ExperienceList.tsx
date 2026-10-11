@@ -1,16 +1,13 @@
 import { Divider, Tag, Typography } from 'antd';
-import dayjs from 'dayjs';
+import { useLocale } from '../../context/LocaleContext';
+import { formatMonthYear } from '../../utils/date';
 import type { Experience } from '../../types';
 
 const { Text } = Typography;
 
-function formatDate(value?: string): string {
-  return value ? dayjs(value).format('MMM YYYY') : '';
-}
-
-function formatRange(exp: Experience): string {
-  const from = formatDate(exp.from);
-  const to = exp.current ? 'Present' : formatDate(exp.to);
+function formatRange(exp: Experience, presentLabel: string): string {
+  const from = formatMonthYear(exp.from);
+  const to = exp.current ? presentLabel : exp.to ? formatMonthYear(exp.to) : '';
   return `${from} — ${to}`;
 }
 
@@ -19,6 +16,7 @@ interface ExperienceListProps {
 }
 
 export default function ExperienceList({ items }: ExperienceListProps) {
+  const { t } = useLocale();
   if (!items.length) return null;
 
   return (
@@ -30,7 +28,9 @@ export default function ExperienceList({ items }: ExperienceListProps) {
           <Text> · {exp.company}</Text>
           {exp.location && <Text type="secondary"> · {exp.location}</Text>}
           <div style={{ margin: '4px 0' }}>
-            <Tag color={exp.current ? 'green' : 'default'}>{formatRange(exp)}</Tag>
+            <Tag color={exp.current ? 'green' : 'default'}>
+              {formatRange(exp, t('experience.present'))}
+            </Tag>
           </div>
           {exp.description && (
             <Text type="secondary" style={{ display: 'block' }}>

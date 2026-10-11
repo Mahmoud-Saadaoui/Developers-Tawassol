@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "brand": "تواصل",
+    "tags": "الوسوم",
+    "users": "المطوّرون",
+    "ask": "اطرح سؤالاً",
+    "myProfile": "ملفي الشخصي",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "themeLight": "التبديل إلى الوضع الفاتح",
+    "themeDark": "التبديل إلى الوضع الداكن"
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "save": "حفظ التغييرات",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "accept": "قبول",
+    "loading": "جارٍ التحميل...",
+    "error": "خطأ",
+    "or": "أو",
+    "answers": "{count} إجابة",
+    "views": "{count} مشاهدة",
+    "questions": "{count} سؤال",
+    "publish": "نشر",
+    "upload": "رفع"
+  },
+  "auth": {
+    "loginTitle": "تسجيل الدخول",
+    "registerTitle": "إنشاء حساب",
+    "loginSuccess": "تم تسجيل الدخول!",
+    "registerSuccess": "تم إنشاء الحساب!",
+    "loginError": "فشل تسجيل الدخول",
+    "registerError": "فشل إنشاء الحساب",
+    "continueGoogle": "المتابعة عبر Google",
+    "continueGithub": "المتابعة عبر GitHub",
+    "continueLinkedin": "المتابعة عبر LinkedIn",
+    "email": "البريد الإلكتروني",
+    "emailInvalid": "بريد إلكتروني غير صالح",
+    "password": "كلمة المرور",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordMin": "8 أحرف على الأقل",
+    "name": "الاسم",
+    "nameRequired": "الاسم مطلوب (حرفان على الأقل)",
+    "noAccount": "ليس لديك حساب بعد؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "oauthFailed": "فشل تسجيل الدخول",
+    "oauthRetry": "إعادة المحاولة",
+    "oauthLoading": "جارٍ تسجيل الدخول..."
+  },
+  "home": {
+    "title": "الأسئلة",
+    "ask": "اطرح سؤالاً",
+    "sortNewest": "الأحدث",
+    "sortVotes": "الأعلى تصويتاً",
+    "sortUnanswered": "بدون إجابة",
+    "empty": "لا توجد أسئلة بعد"
+  },
+  "ask": {
+    "title": "اطرح سؤالاً",
+    "titleLabel": "العنوان",
+    "titleRequired": "10 أحرف على الأقل",
+    "tagsLabel": "الوسوم",
+    "tagsRequired": "اختر وسماً واحداً على الأقل",
+    "tagsPlaceholder": "اختر الوسوم",
+    "contentLabel": "التفاصيل",
+    "contentRequired": "20 حرفاً على الأقل",
+    "contentPlaceholder": "صف سؤالك بالتفصيل (يدعم Markdown)",
+    "success": "تم نشر السؤال!"
+  },
+  "questionDetail": {
+    "notFound": "السؤال غير موجود",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "deleteTitle": "حذف هذا السؤال؟",
+    "deleteDescription": "سيتم حذف جميع الإجابات أيضاً.",
+    "yourAnswer": "إجابتك",
+    "answerPlaceholder": "اكتب إجابتك (يدعم Markdown)",
+    "publishAnswer": "نشر الإجابة",
+    "loginToAnswerLogin": "سجّل الدخول",
+    "loginToAnswerSuffix": "للإجابة على هذا السؤال.",
+    "answerSuccess": "تم نشر الإجابة!",
+    "acceptSuccess": "تم قبول الإجابة!",
+    "deleteSuccess": "تم حذف السؤال"
+  },
+  "answerItem": {
+    "accepted": "إجابة مقبولة",
+    "deleteTitle": "حذف هذه الإجابة؟",
+    "saveSuccess": "تم تحديث الإجابة",
+    "deleteSuccess": "تم حذف الإجابة"
+  },
+  "markdown": {
+    "write": "كتابة",
+    "preview": "معاينة",
+    "empty": "لا يوجد محتوى للعرض"
+  },
+  "editQuestion": {
+    "titleLabel": "العنوان",
+    "tagsLabel": "الوسوم",
+    "contentLabel": "التفاصيل",
+    "success": "تم تحديث السؤال"
+  },
+  "vote": {
+    "upvote": "تصويت إيجابي",
+    "downvote": "تصويت سلبي"
+  },
+  "tags": {
+    "title": "الوسوم",
+    "empty": "لا توجد وسوم"
+  },
+  "tagDetail": {
+    "notFound": "الوسم غير موجود",
+    "empty": "لا توجد أسئلة بهذا الوسم"
+  },
+  "users": {
+    "title": "المطوّرون",
+    "search": "ابحث عن مطوّر...",
+    "empty": "لا يوجد مطوّرون"
+  },
+  "profile": {
+    "notFound": "المستخدم غير موجود",
+    "statsQuestions": "الأسئلة",
+    "statsAnswers": "الإجابات",
+    "statsScore": "النقاط",
+    "statsViews": "المشاهدات",
+    "statsAccepted": "المقبولة",
+    "skills": "المهارات",
+    "experience": "الخبرات",
+    "education": "التعليم",
+    "questions": "الأسئلة المطروحة",
+    "emptyQuestions": "لا توجد أسئلة بعد"
+  },
+  "profileHeader": {
+    "website": "الموقع",
+    "joined": "انضم في"
+  },
+  "experience": {
+    "present": "حالياً"
+  },
+  "education": {
+    "present": "حالياً"
+  },
+  "dashboard": {
+    "title": "ملفي الشخصي",
+    "general": "معلومات عامة",
+    "headline": "العنوان / الشعار",
+    "headlinePlaceholder": "مثال: مطوّر Full-Stack في الدار البيضاء",
+    "location": "الموقع الجغرافي",
+    "locationPlaceholder": "مثال: الرباط، المغرب",
+    "github": "اسم المستخدم على GitHub",
+    "website": "الموقع الإلكتروني",
+    "bio": "نبذة",
+    "bioPlaceholder": "قدّم نفسك: تقنياتك، اهتماماتك...",
+    "skills": "المهارات",
+    "skillsPlaceholder": "اكتب مهارة واضغط Enter (40 حرفاً كحد أقصى)",
+    "social": "روابط التواصل",
+    "experience": "الخبرات",
+    "experienceAdd": "إضافة خبرة",
+    "experienceItem": "منصب {index}",
+    "positionTitle": "المسمى الوظيفي",
+    "positionTitleRequired": "المسمى الوظيفي مطلوب",
+    "company": "الشركة",
+    "companyRequired": "الشركة مطلوبة",
+    "positionLocation": "الموقع (اختياري)",
+    "from": "من",
+    "fromRequired": "تاريخ البداية مطلوب",
+    "to": "إلى",
+    "toRequired": "تاريخ النهاية مطلوب",
+    "current": "منصب حالي",
+    "positionDescription": "الوصف (اختياري)",
+    "educationCard": "التعليم",
+    "educationAdd": "إضافة تعليم",
+    "educationItem": "شهادة {index}",
+    "school": "المدرسة / الجامعة",
+    "schoolRequired": "المدرسة مطلوبة",
+    "degree": "الشهادة (بكالوريوس، ماجستير…)",
+    "degreeRequired": "الشهادة مطلوبة",
+    "fieldofstudy": "التخصص",
+    "fieldofstudyRequired": "التخصص مطلوب",
+    "currentStudy": "جارٍ الدراسة حالياً",
+    "educationDescription": "الوصف (اختياري)",
+    "removePosition": "حذف المنصب {index}",
+    "removeDegree": "حذف الشهادة {index}",
+    "success": "تم تحديث الملف ✓"
+  }
+}

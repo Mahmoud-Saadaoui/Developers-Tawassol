@@ -1,64 +1,66 @@
-import { Button, Card, Divider, Form, Input, Typography, App as AntdApp } from 'antd';
+import { App as AntdApp, Button, Card, Divider, Form, Input, Typography } from 'antd';
 import { GithubOutlined, GoogleOutlined, LinkedinOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLocale } from '../context/LocaleContext';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const { message } = AntdApp.useApp();
+  const { t } = useLocale();
 
   const onFinish = async (values: { email: string; password: string }) => {
     try {
       await login(values.email, values.password);
-      message.success('Connecté !');
+      message.success(t('auth.loginSuccess'));
       navigate('/');
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur de connexion');
+      message.error(err instanceof Error ? err.message : t('auth.loginError'));
     }
   };
 
   return (
     <Card style={{ maxWidth: 400, margin: '40px auto' }}>
-      <Typography.Title level={3}>Connexion</Typography.Title>
+      <Typography.Title level={3}>{t('auth.loginTitle')}</Typography.Title>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
         <Button icon={<GoogleOutlined />} onClick={() => (window.location.href = '/api/auth/google')}>
-          Continuer avec Google
+          {t('auth.continueGoogle')}
         </Button>
         <Button icon={<GithubOutlined />} onClick={() => (window.location.href = '/api/auth/github')}>
-          Continuer avec GitHub
+          {t('auth.continueGithub')}
         </Button>
         <Button icon={<LinkedinOutlined />} onClick={() => (window.location.href = '/api/auth/linkedin')}>
-          Continuer avec LinkedIn
+          {t('auth.continueLinkedin')}
         </Button>
       </div>
 
-      <Divider>ou</Divider>
+      <Divider>{t('common.or')}</Divider>
 
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
-          label="Email"
+          label={t('auth.email')}
           name="email"
-          rules={[{ required: true, type: 'email', message: 'Email invalide' }]}
+          rules={[{ required: true, type: 'email', message: t('auth.emailInvalid') }]}
         >
           <Input type="email" autoComplete="email" />
         </Form.Item>
         <Form.Item
-          label="Mot de passe"
+          label={t('auth.password')}
           name="password"
-          rules={[{ required: true, message: 'Mot de passe requis' }]}
+          rules={[{ required: true, message: t('auth.passwordRequired') }]}
         >
           <Input.Password autoComplete="current-password" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Se connecter
+            {t('auth.loginTitle')}
           </Button>
         </Form.Item>
       </Form>
       <Typography.Text type="secondary">
-        Pas encore de compte ? <Link to="/register">S'inscrire</Link>
+        {t('auth.noAccount')} <Link to="/register">{t('nav.register')}</Link>
       </Typography.Text>
     </Card>
   );

@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Col, Empty, Pagination, Row, Space, Spin, Statistic, Tag, Typography } from 'antd';
 import { useUser, useUserQuestions } from '../hooks/useUsers';
+import { useLocale } from '../context/LocaleContext';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ExperienceList from '../components/profile/ExperienceList';
 import EducationList from '../components/profile/EducationList';
 import QuestionCard from '../components/question/QuestionCard';
 
 export default function ProfilePage() {
+  const { t } = useLocale();
   const { id } = useParams<{ id: string }>();
   const [page, setPage] = useState(1);
 
@@ -15,7 +17,7 @@ export default function ProfilePage() {
   const { data: questionsData, isLoading: questionsLoading } = useUserQuestions(id, page);
 
   if (isLoading) return <Spin size="large" style={{ display: 'block', margin: '80px auto' }} />;
-  if (!data) return <Empty description="Utilisateur introuvable" />;
+  if (!data) return <Empty description={t('profile.notFound')} />;
 
   const { user, stats } = data;
   const profile = user.profile ?? {};
@@ -35,25 +37,25 @@ export default function ProfilePage() {
       <Card style={{ marginTop: 16 }}>
         <Row gutter={[16, 16]}>
           <Col xs={12} sm={8} md={4}>
-            <Statistic title="Questions" value={stats.questions} />
+            <Statistic title={t('profile.statsQuestions')} value={stats.questions} />
           </Col>
           <Col xs={12} sm={8} md={4}>
-            <Statistic title="Réponses" value={stats.answers} />
+            <Statistic title={t('profile.statsAnswers')} value={stats.answers} />
           </Col>
           <Col xs={12} sm={8} md={4}>
-            <Statistic title="Score" value={stats.votesTotal} />
+            <Statistic title={t('profile.statsScore')} value={stats.votesTotal} />
           </Col>
           <Col xs={12} sm={8} md={4}>
-            <Statistic title="Vues" value={stats.views} />
+            <Statistic title={t('profile.statsViews')} value={stats.views} />
           </Col>
           <Col xs={12} sm={8} md={4}>
-            <Statistic title="Accep.ées" value={stats.acceptedAnswers} />
+            <Statistic title={t('profile.statsAccepted')} value={stats.acceptedAnswers} />
           </Col>
         </Row>
       </Card>
 
       {profile.skills && profile.skills.length > 0 && (
-        <Card title="Compétences" style={{ marginTop: 16 }}>
+        <Card title={t('profile.skills')} style={{ marginTop: 16 }}>
           <Space wrap size={8}>
             {profile.skills.map((skill) => (
               <Tag key={skill} color="blue">
@@ -65,22 +67,22 @@ export default function ProfilePage() {
       )}
 
       {profile.experience && profile.experience.length > 0 && (
-        <Card title="Expérience" style={{ marginTop: 16 }}>
+        <Card title={t('profile.experience')} style={{ marginTop: 16 }}>
           <ExperienceList items={profile.experience} />
         </Card>
       )}
 
       {profile.education && profile.education.length > 0 && (
-        <Card title="Formation" style={{ marginTop: 16 }}>
+        <Card title={t('profile.education')} style={{ marginTop: 16 }}>
           <EducationList items={profile.education} />
         </Card>
       )}
 
-      <Card title="Questions posées" style={{ marginTop: 16 }}>
+      <Card title={t('profile.questions')} style={{ marginTop: 16 }}>
         {questionsLoading ? (
-          <Empty description="Chargement..." />
+          <Empty description={t('common.loading')} />
         ) : !questionsData?.items.length ? (
-          <Empty description="Aucune question" />
+          <Empty description={t('profile.emptyQuestions')} />
         ) : (
           <>
             {questionsData.items.map((q) => (

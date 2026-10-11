@@ -3,6 +3,8 @@ import { App as AntdApp, Avatar, Button, Card, Popconfirm, Space, Tag, Typograph
 import { CheckOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type { Post } from '../../types';
 import { useAuth } from '../../context/AuthContext';
+import { useLocale } from '../../context/LocaleContext';
+import { formatDate } from '../../utils/date';
 import { useUpdateAnswer, useDeleteAnswer } from '../../hooks/useQuestions';
 import Markdown from '../common/Markdown';
 import MarkdownEditor from '../common/MarkdownEditor';
@@ -25,6 +27,7 @@ export default function AnswerItem({
   onAccept,
 }: AnswerItemProps) {
   const { user } = useAuth();
+  const { t } = useLocale();
   const { message } = AntdApp.useApp();
   const updateAnswer = useUpdateAnswer();
   const deleteAnswer = useDeleteAnswer();
@@ -38,18 +41,18 @@ export default function AnswerItem({
     try {
       await updateAnswer.mutateAsync({ id: answer.id, content });
       setEditing(false);
-      message.success('Réponse modifiée');
+      message.success(t('answerItem.saveSuccess'));
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
   const handleDelete = async () => {
     try {
       await deleteAnswer.mutateAsync(answer.id);
-      message.success('Réponse supprimée');
+      message.success(t('answerItem.deleteSuccess'));
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
@@ -63,7 +66,7 @@ export default function AnswerItem({
         <div style={{ flex: 1, minWidth: 0 }}>
           {isAccepted && (
             <Tag color="success" icon={<CheckOutlined />} style={{ marginBottom: 8 }}>
-              Réponse acceptée
+              {t('answerItem.accepted')}
             </Tag>
           )}
 
@@ -77,7 +80,7 @@ export default function AnswerItem({
                   onClick={handleSave}
                   loading={updateAnswer.isPending}
                 >
-                  Enregistrer
+                  {t('common.save')}
                 </Button>
                 <Button
                   size="small"
@@ -86,7 +89,7 @@ export default function AnswerItem({
                     setContent(answer.content);
                   }}
                 >
-                  Annuler
+                  {t('common.cancel')}
                 </Button>
               </Space>
             </>
@@ -99,27 +102,27 @@ export default function AnswerItem({
               <Avatar size={20} src={answer.author.avatar?.url} />
               <Text type="secondary">{answer.author.name}</Text>
             </Space>
-            <Text type="secondary">{new Date(answer.createdAt).toLocaleDateString()}</Text>
+            <Text type="secondary">{formatDate(answer.createdAt)}</Text>
 
             {isQuestionAuthor && !isAccepted && (
               <Button size="small" icon={<CheckOutlined />} onClick={() => onAccept(answer.id)}>
-                Accepter
+                {t('common.accept')}
               </Button>
             )}
 
             {isAuthor && !editing && (
               <Space size={8}>
                 <Button size="small" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-                  Modifier
+                  {t('common.edit')}
                 </Button>
                 <Popconfirm
-                  title="Supprimer cette réponse ?"
-                  okText="Supprimer"
-                  cancelText="Annuler"
+                  title={t('answerItem.deleteTitle')}
+                  okText={t('common.delete')}
+                  cancelText={t('common.cancel')}
                   onConfirm={handleDelete}
                 >
                   <Button size="small" danger icon={<DeleteOutlined />}>
-                    Supprimer
+                    {t('common.delete')}
                   </Button>
                 </Popconfirm>
               </Space>

@@ -2,6 +2,7 @@ import { Avatar, Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useLocale } from '../../context/LocaleContext';
 import { useUploadAvatar } from '../../hooks/useUpload';
 
 interface AvatarUploadProps {
@@ -10,6 +11,7 @@ interface AvatarUploadProps {
 
 export default function AvatarUpload({ size = 128 }: AvatarUploadProps) {
   const { user, refreshUser } = useAuth();
+  const { t } = useLocale();
   const [loading, setLoading] = useState(false);
   const uploadAvatar = useUploadAvatar();
 
@@ -31,7 +33,7 @@ export default function AvatarUpload({ size = 128 }: AvatarUploadProps) {
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>{t('common.upload')}</div>
     </div>
   );
 

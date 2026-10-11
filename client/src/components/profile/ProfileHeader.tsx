@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import type { User } from '../../types';
 import { useLocale } from '../../context/LocaleContext';
+import { formatDate } from '../../utils/date';
 
 const { Title, Text } = Typography;
 
@@ -29,13 +30,9 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ user }: ProfileHeaderProps) {
-  const { locale } = useLocale();
+  const { t } = useLocale();
   const profile = user.profile ?? {};
   const social = profile.social ?? {};
-  const joined = new Date(user.createdAt).toLocaleDateString(
-    locale === 'ar' ? 'ar' : 'en-GB',
-    { year: 'numeric', month: 'short' },
-  );
 
   return (
     <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -62,7 +59,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           )}
           {profile.website && (
             <a href={profile.website} target="_blank" rel="noopener noreferrer">
-              <GlobalOutlined /> Site web
+              <GlobalOutlined /> {t('profileHeader.website')}
             </a>
           )}
           {profile.github && (
@@ -92,7 +89,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           <Space size={4}>
             <CalendarOutlined />
             <Text type="secondary">
-              {locale === 'ar' ? 'انضم في' : 'Joined'} {joined}
+              {t('profileHeader.joined')} {formatDate(user.createdAt)}
             </Text>
           </Space>
         </Space>

@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "brand": "Tawassol",
+    "tags": "Tags",
+    "users": "Developers",
+    "ask": "Ask a question",
+    "myProfile": "My profile",
+    "logout": "Log out",
+    "login": "Log in",
+    "register": "Sign up",
+    "themeLight": "Switch to light mode",
+    "themeDark": "Switch to dark mode"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save changes",
+    "delete": "Delete",
+    "edit": "Edit",
+    "accept": "Accept",
+    "loading": "Loading...",
+    "error": "Error",
+    "or": "or",
+    "answers": "{count} answer(s)",
+    "views": "{count} views",
+    "questions": "{count} question(s)",
+    "publish": "Publish",
+    "upload": "Upload"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Sign up",
+    "loginSuccess": "Logged in!",
+    "registerSuccess": "Account created!",
+    "loginError": "Login failed",
+    "registerError": "Sign-up failed",
+    "continueGoogle": "Continue with Google",
+    "continueGithub": "Continue with GitHub",
+    "continueLinkedin": "Continue with LinkedIn",
+    "email": "Email",
+    "emailInvalid": "Invalid email",
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordMin": "At least 8 characters",
+    "name": "Name",
+    "nameRequired": "Name is required (min. 2 characters)",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "oauthFailed": "Login failed",
+    "oauthRetry": "Try again",
+    "oauthLoading": "Signing you in..."
+  },
+  "home": {
+    "title": "Questions",
+    "ask": "Ask a question",
+    "sortNewest": "Newest",
+    "sortVotes": "Top voted",
+    "sortUnanswered": "Unanswered",
+    "empty": "No questions yet"
+  },
+  "ask": {
+    "title": "Ask a question",
+    "titleLabel": "Title",
+    "titleRequired": "At least 10 characters",
+    "tagsLabel": "Tags",
+    "tagsRequired": "Select at least one tag",
+    "tagsPlaceholder": "Select tags",
+    "contentLabel": "Details",
+    "contentRequired": "At least 20 characters",
+    "contentPlaceholder": "Describe your question in detail (Markdown supported)",
+    "success": "Question published!"
+  },
+  "questionDetail": {
+    "notFound": "Question not found",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteTitle": "Delete this question?",
+    "deleteDescription": "All answers will also be deleted.",
+    "yourAnswer": "Your answer",
+    "answerPlaceholder": "Write your answer (Markdown supported)",
+    "publishAnswer": "Publish answer",
+    "loginToAnswerLogin": "Log in",
+    "loginToAnswerSuffix": "to answer this question.",
+    "answerSuccess": "Answer published!",
+    "acceptSuccess": "Answer accepted!",
+    "deleteSuccess": "Question deleted"
+  },
+  "answerItem": {
+    "accepted": "Accepted answer",
+    "deleteTitle": "Delete this answer?",
+    "saveSuccess": "Answer updated",
+    "deleteSuccess": "Answer deleted"
+  },
+  "markdown": {
+    "write": "Write",
+    "preview": "Preview",
+    "empty": "Nothing to show"
+  },
+  "editQuestion": {
+    "titleLabel": "Title",
+    "tagsLabel": "Tags",
+    "contentLabel": "Details",
+    "success": "Question updated"
+  },
+  "vote": {
+    "upvote": "Upvote",
+    "downvote": "Downvote"
+  },
+  "tags": {
+    "title": "Tags",
+    "empty": "No tags"
+  },
+  "tagDetail": {
+    "notFound": "Tag not found",
+    "empty": "No questions with this tag"
+  },
+  "users": {
+    "title": "Developers",
+    "search": "Search developers…",
+    "empty": "No developers found"
+  },
+  "profile": {
+    "notFound": "User not found",
+    "statsQuestions": "Questions",
+    "statsAnswers": "Answers",
+    "statsScore": "Score",
+    "statsViews": "Views",
+    "statsAccepted": "Accepted",
+    "skills": "Skills",
+    "experience": "Experience",
+    "education": "Education",
+    "questions": "Asked questions",
+    "emptyQuestions": "No questions yet"
+  },
+  "profileHeader": {
+    "website": "Website",
+    "joined": "Joined"
+  },
+  "experience": {
+    "present": "Present"
+  },
+  "education": {
+    "present": "Present"
+  },
+  "dashboard": {
+    "title": "My profile",
+    "general": "General information",
+    "headline": "Headline",
+    "headlinePlaceholder": "Ex: Full-Stack Developer based in Casablanca",
+    "location": "Location",
+    "locationPlaceholder": "Ex: Rabat, Morocco",
+    "github": "GitHub username",
+    "website": "Website",
+    "bio": "Bio",
+    "bioPlaceholder": "Introduce yourself: your stack, your interests…",
+    "skills": "Skills",
+    "skillsPlaceholder": "Type a skill and press Enter (max 40 characters)",
+    "social": "Social links",
+    "experience": "Experience",
+    "experienceAdd": "Add experience",
+    "experienceItem": "Position {index}",
+    "positionTitle": "Job title",
+    "positionTitleRequired": "Job title is required",
+    "company": "Company",
+    "companyRequired": "Company is required",
+    "positionLocation": "Location (optional)",
+    "from": "From",
+    "fromRequired": "Start date is required",
+    "to": "To",
+    "toRequired": "End date is required",
+    "current": "Current position",
+    "positionDescription": "Description (optional)",
+    "educationCard": "Education",
+    "educationAdd": "Add education",
+    "educationItem": "Degree {index}",
+    "school": "School / university",
+    "schoolRequired": "School is required",
+    "degree": "Degree (BSc, MSc…)",
+    "degreeRequired": "Degree is required",
+    "fieldofstudy": "Field of study",
+    "fieldofstudyRequired": "Field of study is required",
+    "currentStudy": "Currently studying",
+    "educationDescription": "Description (optional)",
+    "removePosition": "Remove position {index}",
+    "removeDegree": "Remove degree {index}",
+    "success": "Profile updated ✓"
+  }
+}

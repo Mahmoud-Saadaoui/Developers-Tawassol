@@ -3,11 +3,13 @@ import { useSearchParams } from 'react-router-dom';
 import { Empty, Input, Pagination, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useUsers } from '../hooks/useUsers';
+import { useLocale } from '../context/LocaleContext';
 import UserCard from '../components/profile/UserCard';
 
 const { Title } = Typography;
 
 export default function UsersPage() {
+  const { t } = useLocale();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page') ?? 1);
   const searchFromUrl = searchParams.get('search') ?? '';
@@ -26,10 +28,10 @@ export default function UsersPage() {
 
   return (
     <div>
-      <Title level={2}>Développeurs</Title>
+      <Title level={2}>{t('users.title')}</Title>
 
       <Input
-        placeholder="Rechercher un développeur…"
+        placeholder={t('users.search')}
         prefix={<SearchOutlined />}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -40,9 +42,9 @@ export default function UsersPage() {
       />
 
       {isLoading ? (
-        <Empty description="Chargement..." />
+        <Empty description={t('common.loading')} />
       ) : !data?.items.length ? (
-        <Empty description="Aucun développeur trouvé" />
+        <Empty description={t('users.empty')} />
       ) : (
         <>
           {data.items.map((user) => (

@@ -1,24 +1,26 @@
 import { useParams } from 'react-router-dom';
 import { Empty, List, Typography } from 'antd';
 import { useTags, useQuestions } from '../hooks/useQuestions';
+import { useLocale } from '../context/LocaleContext';
 import QuestionCard from '../components/question/QuestionCard';
 
 const { Title } = Typography;
 
 export default function TagDetailPage() {
+  const { t } = useLocale();
   const { slug } = useParams<{ slug: string }>();
   const { data: tags } = useTags();
-  const tag = tags?.find((t) => t.slug === slug);
+  const tag = tags?.find((tg) => tg.slug === slug);
   const { data: questions, isLoading } = useQuestions({ tag: tag?.id });
 
-  if (!tag) return <Empty description="Tag introuvable" />;
+  if (!tag) return <Empty description={t('tagDetail.notFound')} />;
 
   return (
     <div>
       <Title level={2}>{tag.name}</Title>
       {tag.description && <Typography.Paragraph type="secondary">{tag.description}</Typography.Paragraph>}
       <Typography.Text type="secondary">
-        {tag.questionsCount} question(s)
+        {t('common.questions', { count: tag.questionsCount })}
       </Typography.Text>
 
       <List
@@ -26,7 +28,7 @@ export default function TagDetailPage() {
         loading={isLoading}
         dataSource={questions?.items ?? []}
         renderItem={(q) => <QuestionCard key={q.id} question={q} />}
-        locale={{ emptyText: <Empty description="Aucune question avec ce tag" /> }}
+        locale={{ emptyText: <Empty description={t('tagDetail.empty')} /> }}
       />
     </div>
   );

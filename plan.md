@@ -408,11 +408,11 @@ VITE_API_URL=http://localhost:5000/api
 - [x] Schémas Zod de profil (expérience/éducation/social).
 
 ### Phase 7 — i18n AR/EN + RTL + polish UI (2 j)
-- [ ] `LocaleContext`, dictionnaires `en.json`/`ar.json`, `t()`.
-- [ ] antd `ConfigProvider` (locale + dir + theme), `<html dir>`.
-- [ ] Sélecteur de langue dans la Navbar.
-- [ ] Thème clair/sombre (`ThemeContext`), design system tokens.
-- [ ] Responsive + états de chargement/erreur/vide.
+- [x] `LocaleContext`, dictionnaires `en.json`/`ar.json`, `t()`.
+- [x] antd `ConfigProvider` (locale + dir + theme), `<html dir>`.
+- [x] Sélecteur de langue dans la Navbar.
+- [x] Thème clair/sombre (`ThemeContext`), design system tokens.
+- [x] Responsive + états de chargement/erreur/vide.
 
 ### Phase 8 — Tests & durcissement (2-3 j)
 - [ ] Tests backend (Vitest + Supertest + Mongo mémoire).

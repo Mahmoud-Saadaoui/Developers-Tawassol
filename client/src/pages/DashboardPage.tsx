@@ -2,6 +2,7 @@ import { App as AntdApp, Button, Card, Checkbox, DatePicker, Form, Input, Select
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAuth } from '../context/AuthContext';
+import { useLocale } from '../context/LocaleContext';
 import AvatarUpload from '../components/common/AvatarUpload';
 import { useUpdateProfile } from '../hooks/useUsers';
 import type { UserProfile } from '../types';
@@ -62,6 +63,7 @@ function toDayjs(value?: string) {
 
 export default function DashboardPage() {
   const { user, refreshUser } = useAuth();
+  const { t } = useLocale();
   const { message } = AntdApp.useApp();
   const updateProfile = useUpdateProfile();
   const [form] = Form.useForm<ProfileFormValues>();
@@ -137,15 +139,15 @@ export default function DashboardPage() {
     try {
       await updateProfile.mutateAsync(payload);
       await refreshUser();
-      message.success('Profil mis à jour ✓');
+      message.success(t('dashboard.success'));
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
   return (
     <div style={{ maxWidth: 860, margin: '0 auto' }}>
-      <Title level={3}>Mon profil</Title>
+      <Title level={3}>{t('dashboard.title')}</Title>
 
       <Card style={{ marginBottom: 16 }}>
         <Space align="center" size={16}>
@@ -159,40 +161,45 @@ export default function DashboardPage() {
         initialValues={initialValues}
         onFinish={onFinish}
       >
-        <Card title="Informations générales" style={{ marginBottom: 16 }}>
+        <Card title={t('dashboard.general')} style={{ marginBottom: 16 }}>
           <Space direction="vertical" style={{ width: '100%' }} size={0}>
-            <Form.Item name="headline" label="Titre / accroche" rules={[{ max: 140 }]}>
-              <Input placeholder="Ex : Full-Stack Developer basé à Casablanca" />
+            <Form.Item name="headline" label={t('dashboard.headline')} rules={[{ max: 140 }]}>
+              <Input placeholder={t('dashboard.headlinePlaceholder')} />
             </Form.Item>
 
             <Space size={16} style={{ width: '100%' }} align="start">
-              <Form.Item name="location" label="Localisation" style={{ width: '50%' }}>
-                <Input placeholder="Ex : Rabat, Maroc" />
+              <Form.Item name="location" label={t('dashboard.location')} style={{ width: '50%' }}>
+                <Input placeholder={t('dashboard.locationPlaceholder')} />
               </Form.Item>
-              <Form.Item name="github" label="Pseudo GitHub" style={{ width: '50%' }}>
-                <Input placeholder="Ex : saadouli" />
+              <Form.Item name="github" label={t('dashboard.github')} style={{ width: '50%' }}>
+                <Input placeholder="Ex: saadouli" />
               </Form.Item>
             </Space>
 
-            <Form.Item name="website" label="Site web">
+            <Form.Item name="website" label={t('dashboard.website')}>
               <Input placeholder="https://…" />
             </Form.Item>
 
-            <Form.Item name="bio" label="Bio">
-              <Input.TextArea rows={5} maxLength={2000} showCount placeholder="Présentez-vous, votre stack, vos centres d'intérêt…" />
+            <Form.Item name="bio" label={t('dashboard.bio')}>
+              <Input.TextArea
+                rows={5}
+                maxLength={2000}
+                showCount
+                placeholder={t('dashboard.bioPlaceholder')}
+              />
             </Form.Item>
 
-            <Form.Item name="skills" label="Compétences">
+            <Form.Item name="skills" label={t('dashboard.skills')}>
               <Select
                 mode="tags"
                 tokenSeparators={[',', ';']}
-                placeholder="Ajoutez des compétences puis Entrée (max 40 caractères)"
+                placeholder={t('dashboard.skillsPlaceholder')}
               />
             </Form.Item>
           </Space>
         </Card>
 
-        <Card title="Réseaux sociaux" style={{ marginBottom: 16 }}>
+        <Card title={t('dashboard.social')} style={{ marginBottom: 16 }}>
           <Space direction="vertical" style={{ width: '100%' }} size={0}>
             {socialFields.map(({ name, label, placeholder }) => (
               <Form.Item key={name} name={['social', name]} label={label}>
@@ -202,7 +209,7 @@ export default function DashboardPage() {
           </Space>
         </Card>
 
-        <Card title="Expérience" style={{ marginBottom: 16 }}>
+        <Card title={t('dashboard.experience')} style={{ marginBottom: 16 }}>
           <Form.List name="experience">
             {(fields, { add, remove }) => (
               <>
@@ -212,41 +219,41 @@ export default function DashboardPage() {
                     style={{ border: '1px solid #f0f0f0', borderRadius: 8, padding: 16, marginBottom: 12 }}
                   >
                     <Space align="start" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Text strong>Poste {field.name + 1}</Text>
+                      <Text strong>{t('dashboard.experienceItem', { index: field.name + 1 })}</Text>
                       {fields.length > 1 && (
                         <Button
                           type="text"
                           danger
                           icon={<MinusCircleOutlined />}
                           onClick={() => remove(field.name)}
-                          aria-label={`Supprimer le poste ${field.name + 1}`}
+                          aria-label={t('dashboard.removePosition', { index: field.name + 1 })}
                         />
                       )}
                     </Space>
 
                     <Form.Item
                       name={[field.name, 'title']}
-                      rules={[{ required: true, message: 'Intitulé requis' }]}
+                      rules={[{ required: true, message: t('dashboard.positionTitleRequired') }]}
                     >
-                      <Input placeholder="Intitulé du poste" />
+                      <Input placeholder={t('dashboard.positionTitle')} />
                     </Form.Item>
                     <Form.Item
                       name={[field.name, 'company']}
-                      rules={[{ required: true, message: 'Entreprise requise' }]}
+                      rules={[{ required: true, message: t('dashboard.companyRequired') }]}
                     >
-                      <Input placeholder="Entreprise" />
+                      <Input placeholder={t('dashboard.company')} />
                     </Form.Item>
                     <Form.Item name={[field.name, 'location']}>
-                      <Input placeholder="Localisation (optionnel)" />
+                      <Input placeholder={t('dashboard.positionLocation')} />
                     </Form.Item>
 
                     <Space size={16}>
                       <Form.Item
                         name={[field.name, 'from']}
-                        label="Début"
-                        rules={[{ required: true, message: 'Date de début requise' }]}
+                        label={t('dashboard.from')}
+                        rules={[{ required: true, message: t('dashboard.fromRequired') }]}
                       >
-                        <DatePicker picker="month" placeholder="Début" />
+                        <DatePicker picker="month" placeholder={t('dashboard.from')} />
                       </Form.Item>
 
                       <Form.Item
@@ -261,39 +268,39 @@ export default function DashboardPage() {
                           return (
                             <Form.Item
                               name={[field.name, 'to']}
-                              label="Fin"
+                              label={t('dashboard.to')}
                               rules={
                                 isCurrent
                                   ? []
-                                  : [{ required: true, message: 'Date de fin requise' }]
+                                  : [{ required: true, message: t('dashboard.toRequired') }]
                               }
                             >
-                              <DatePicker picker="month" placeholder="Fin" disabled={!!isCurrent} />
+                              <DatePicker picker="month" placeholder={t('dashboard.to')} disabled={!!isCurrent} />
                             </Form.Item>
                           );
                         }}
                       </Form.Item>
 
                       <Form.Item name={[field.name, 'current']} valuePropName="checked" label=" ">
-                        <Checkbox>Poste actuel</Checkbox>
+                        <Checkbox>{t('dashboard.current')}</Checkbox>
                       </Form.Item>
                     </Space>
 
                     <Form.Item name={[field.name, 'description']}>
-                      <Input.TextArea rows={2} placeholder="Description (optionnel)" />
+                      <Input.TextArea rows={2} placeholder={t('dashboard.positionDescription')} />
                     </Form.Item>
                   </div>
                 ))}
 
                 <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} block>
-                  Ajouter une expérience
+                  {t('dashboard.experienceAdd')}
                 </Button>
               </>
             )}
           </Form.List>
         </Card>
 
-        <Card title="Formation" style={{ marginBottom: 16 }}>
+        <Card title={t('dashboard.educationCard')} style={{ marginBottom: 16 }}>
           <Form.List name="education">
             {(fields, { add, remove }) => (
               <>
@@ -303,48 +310,48 @@ export default function DashboardPage() {
                     style={{ border: '1px solid #f0f0f0', borderRadius: 8, padding: 16, marginBottom: 12 }}
                   >
                     <Space align="start" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Text strong>Diplôme {field.name + 1}</Text>
+                      <Text strong>{t('dashboard.educationItem', { index: field.name + 1 })}</Text>
                       {fields.length > 1 && (
                         <Button
                           type="text"
                           danger
                           icon={<MinusCircleOutlined />}
                           onClick={() => remove(field.name)}
-                          aria-label={`Supprimer le diplôme ${field.name + 1}`}
+                          aria-label={t('dashboard.removeDegree', { index: field.name + 1 })}
                         />
                       )}
                     </Space>
 
                     <Form.Item
                       name={[field.name, 'school']}
-                      rules={[{ required: true, message: 'École requise' }]}
+                      rules={[{ required: true, message: t('dashboard.schoolRequired') }]}
                     >
-                      <Input placeholder="École / université" />
+                      <Input placeholder={t('dashboard.school')} />
                     </Form.Item>
                     <Space size={16} style={{ width: '100%' }} align="start">
                       <Form.Item
                         name={[field.name, 'degree']}
-                        rules={[{ required: true, message: 'Diplôme requis' }]}
+                        rules={[{ required: true, message: t('dashboard.degreeRequired') }]}
                         style={{ width: '50%' }}
                       >
-                        <Input placeholder="Diplôme (Master, Licence…)" />
+                        <Input placeholder={t('dashboard.degree')} />
                       </Form.Item>
                       <Form.Item
                         name={[field.name, 'fieldofstudy']}
-                        rules={[{ required: true, message: 'Spécialité requise' }]}
+                        rules={[{ required: true, message: t('dashboard.fieldofstudyRequired') }]}
                         style={{ width: '50%' }}
                       >
-                        <Input placeholder="Spécialité (Informatique…)" />
+                        <Input placeholder={t('dashboard.fieldofstudy')} />
                       </Form.Item>
                     </Space>
 
                     <Space size={16}>
                       <Form.Item
                         name={[field.name, 'from']}
-                        label="Début"
-                        rules={[{ required: true, message: 'Date de début requise' }]}
+                        label={t('dashboard.from')}
+                        rules={[{ required: true, message: t('dashboard.fromRequired') }]}
                       >
-                        <DatePicker picker="month" placeholder="Début" />
+                        <DatePicker picker="month" placeholder={t('dashboard.from')} />
                       </Form.Item>
 
                       <Form.Item
@@ -359,32 +366,32 @@ export default function DashboardPage() {
                           return (
                             <Form.Item
                               name={[field.name, 'to']}
-                              label="Fin"
+                              label={t('dashboard.to')}
                               rules={
                                 isCurrent
                                   ? []
-                                  : [{ required: true, message: 'Date de fin requise' }]
+                                  : [{ required: true, message: t('dashboard.toRequired') }]
                               }
                             >
-                              <DatePicker picker="month" placeholder="Fin" disabled={!!isCurrent} />
+                              <DatePicker picker="month" placeholder={t('dashboard.to')} disabled={!!isCurrent} />
                             </Form.Item>
                           );
                         }}
                       </Form.Item>
 
                       <Form.Item name={[field.name, 'current']} valuePropName="checked" label=" ">
-                        <Checkbox>En cours</Checkbox>
+                        <Checkbox>{t('dashboard.currentStudy')}</Checkbox>
                       </Form.Item>
                     </Space>
 
                     <Form.Item name={[field.name, 'description']}>
-                      <Input.TextArea rows={2} placeholder="Description (optionnel)" />
+                      <Input.TextArea rows={2} placeholder={t('dashboard.educationDescription')} />
                     </Form.Item>
                   </div>
                 ))}
 
                 <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} block>
-                  Ajouter une formation
+                  {t('dashboard.educationAdd')}
                 </Button>
               </>
             )}
@@ -393,7 +400,7 @@ export default function DashboardPage() {
 
         <Space>
           <Button type="primary" htmlType="submit" loading={updateProfile.isPending}>
-            Enregistrer
+            {t('common.save')}
           </Button>
         </Space>
       </Form>

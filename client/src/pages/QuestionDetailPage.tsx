@@ -20,6 +20,8 @@ import {
   useDeleteQuestion,
 } from '../hooks/useQuestions';
 import { useAuth } from '../context/AuthContext';
+import { useLocale } from '../context/LocaleContext';
+import { formatDate } from '../utils/date';
 import Markdown from '../components/common/Markdown';
 import MarkdownEditor from '../components/common/MarkdownEditor';
 import VoteButtons from '../components/question/VoteButtons';
@@ -33,6 +35,7 @@ export default function QuestionDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLocale();
   const { message } = AntdApp.useApp();
 
   const { data: question, isLoading } = useQuestion(id!);
@@ -44,8 +47,8 @@ export default function QuestionDetailPage() {
   const [answerContent, setAnswerContent] = useState('');
   const [editing, setEditing] = useState(false);
 
-  if (isLoading) return <Empty description="Chargement..." />;
-  if (!question) return <Empty description="Question introuvable" />;
+  if (isLoading) return <Empty description={t('common.loading')} />;
+  if (!question) return <Empty description={t('questionDetail.notFound')} />;
 
   const isAuthor = user?.id === question.author.id;
 
@@ -53,28 +56,28 @@ export default function QuestionDetailPage() {
     try {
       await createAnswer.mutateAsync({ questionId: id!, content: answerContent });
       setAnswerContent('');
-      message.success('Réponse publiée !');
+      message.success(t('questionDetail.answerSuccess'));
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
   const handleAccept = async (answerId: string) => {
     try {
       await acceptAnswer.mutateAsync({ questionId: id!, answerId });
-      message.success('Réponse acceptée !');
+      message.success(t('questionDetail.acceptSuccess'));
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
   const handleDelete = async () => {
     try {
       await deleteQuestion.mutateAsync(id!);
-      message.success('Question supprimée');
+      message.success(t('questionDetail.deleteSuccess'));
       navigate('/');
     } catch (err: unknown) {
-      message.error(err instanceof Error ? err.message : 'Erreur');
+      message.error(err instanceof Error ? err.message : t('common.error'));
     }
   };
 
@@ -102,10 +105,8 @@ export default function QuestionDetailPage() {
                   <Avatar size={24} src={question.author.avatar?.url} />
                   <Text type="secondary">{question.author.name}</Text>
                 </Space>
-                <Text type="secondary">
-                  {new Date(question.createdAt).toLocaleDateString()}
-                </Text>
-                <Text type="secondary">{question.views} vues</Text>
+                <Text type="secondary">{formatDate(question.createdAt)}</Text>
+                <Text type="secondary">{t('common.views', { count: question.views })}</Text>
               </Space>
               <Markdown content={question.content} />
               <Space style={{ marginTop: 12 }} wrap>
@@ -116,17 +117,17 @@ export default function QuestionDetailPage() {
               {isAuthor && (
                 <Space style={{ marginTop: 12 }}>
                   <Button size="small" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-                    Modifier
+                    {t('questionDetail.edit')}
                   </Button>
                   <Popconfirm
-                    title="Supprimer cette question ?"
-                    description="Toutes les réponses seront également supprimées."
-                    okText="Supprimer"
-                    cancelText="Annuler"
+                    title={t('questionDetail.deleteTitle')}
+                    description={t('questionDetail.deleteDescription')}
+                    okText={t('common.delete')}
+                    cancelText={t('common.cancel')}
                     onConfirm={handleDelete}
                   >
                     <Button danger size="small" icon={<DeleteOutlined />}>
-                      Supprimer
+                      {t('questionDetail.delete')}
                     </Button>
                   </Popconfirm>
                 </Space>
@@ -138,7 +139,7 @@ export default function QuestionDetailPage() {
 
       {/* Answers */}
       <Title level={4} style={{ marginTop: 24 }}>
-        {answers?.length ?? 0} réponse(s)
+        {t('common.answers', { count: answers?.length ?? 0 })}
       </Title>
 
       <List
@@ -158,11 +159,11 @@ export default function QuestionDetailPage() {
       {/* Add answer */}
       {user ? (
         <Card style={{ marginTop: 24 }}>
-          <Title level={5}>Votre réponse</Title>
+          <Title level={5}>{t('questionDetail.yourAnswer')}</Title>
           <MarkdownEditor
             value={answerContent}
             onChange={setAnswerContent}
-            placeholder="Écrivez votre réponse (Markdown supporté)"
+            placeholder={t('questionDetail.answerPlaceholder')}
             minRows={4}
           />
           <Button
@@ -171,12 +172,13 @@ export default function QuestionDetailPage() {
             onClick={handleAnswer}
             loading={createAnswer.isPending}
           >
-            Publier la réponse
+            {t('questionDetail.publishAnswer')}
           </Button>
         </Card>
       ) : (
         <Card style={{ marginTop: 24 }}>
-          <Link to="/login">Connectez-vous</Link> pour répondre à cette question.
+          <Link to="/login">{t('questionDetail.loginToAnswerLogin')}</Link>{' '}
+          {t('questionDetail.loginToAnswerSuffix')}
         </Card>
       )}
     </div>

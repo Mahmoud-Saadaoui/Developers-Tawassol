@@ -2,6 +2,7 @@ import { Card, Space, Typography, Avatar } from 'antd';
 import { MessageOutlined, EyeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import type { Post } from '../../types';
+import { useLocale } from '../../context/LocaleContext';
 import TagChip from './TagChip';
 import VoteButtons from './VoteButtons';
 
@@ -12,6 +13,8 @@ interface QuestionCardProps {
 }
 
 export default function QuestionCard({ question }: QuestionCardProps) {
+  const { t } = useLocale();
+
   return (
     <Card size="small" style={{ marginBottom: 12 }}>
       <Space align="start" style={{ width: '100%' }}>
@@ -39,11 +42,11 @@ export default function QuestionCard({ question }: QuestionCardProps) {
             </Space>
             <Space size={4}>
               <MessageOutlined />
-              <Text type="secondary">{question.answersCount} réponses</Text>
+              <Text type="secondary">{t('common.answers', { count: question.answersCount })}</Text>
             </Space>
             <Space size={4}>
               <EyeOutlined />
-              <Text type="secondary">{question.views} vues</Text>
+              <Text type="secondary">{t('common.views', { count: question.views })}</Text>
             </Space>
             {question.tags.map((tag) => (
               <TagChip key={tag.id} tag={tag} />

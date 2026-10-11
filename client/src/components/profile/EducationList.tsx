@@ -1,16 +1,13 @@
 import { Divider, Tag, Typography } from 'antd';
-import dayjs from 'dayjs';
+import { useLocale } from '../../context/LocaleContext';
+import { formatMonthYear } from '../../utils/date';
 import type { Education } from '../../types';
 
 const { Text } = Typography;
 
-function formatDate(value?: string): string {
-  return value ? dayjs(value).format('MMM YYYY') : '';
-}
-
-function formatRange(edu: Education): string {
-  const from = formatDate(edu.from);
-  const to = edu.current ? 'Present' : formatDate(edu.to);
+function formatRange(edu: Education, presentLabel: string): string {
+  const from = formatMonthYear(edu.from);
+  const to = edu.current ? presentLabel : edu.to ? formatMonthYear(edu.to) : '';
   return `${from} — ${to}`;
 }
 
@@ -19,6 +16,7 @@ interface EducationListProps {
 }
 
 export default function EducationList({ items }: EducationListProps) {
+  const { t } = useLocale();
   if (!items.length) return null;
 
   return (
@@ -30,7 +28,9 @@ export default function EducationList({ items }: EducationListProps) {
           <Text> · {edu.degree}</Text>
           {edu.fieldofstudy && <Text type="secondary"> · {edu.fieldofstudy}</Text>}
           <div style={{ margin: '4px 0' }}>
-            <Tag color={edu.current ? 'green' : 'default'}>{formatRange(edu)}</Tag>
+            <Tag color={edu.current ? 'green' : 'default'}>
+              {formatRange(edu, t('education.present'))}
+            </Tag>
           </div>
           {edu.description && (
             <Text type="secondary" style={{ display: 'block' }}>

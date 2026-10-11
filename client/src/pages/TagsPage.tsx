@@ -1,15 +1,17 @@
 import { Card, List, Tag, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { useTags } from '../hooks/useQuestions';
+import { useLocale } from '../context/LocaleContext';
 
 const { Title } = Typography;
 
 export default function TagsPage() {
+  const { t } = useLocale();
   const { data: tags, isLoading } = useTags();
 
   return (
     <div>
-      <Title level={2}>Tags</Title>
+      <Title level={2}>{t('tags.title')}</Title>
       <Card>
         <List
           loading={isLoading}
@@ -20,11 +22,11 @@ export default function TagsPage() {
                 <Tag color="blue">{tag.name}</Tag>
               </Link>
               <Typography.Text type="secondary">
-                {tag.questionsCount} question(s)
+                {t('common.questions', { count: tag.questionsCount })}
               </Typography.Text>
             </List.Item>
           )}
-          locale={{ emptyText: 'Aucun tag' }}
+          locale={{ emptyText: t('tags.empty') }}
         />
       </Card>
     </div>

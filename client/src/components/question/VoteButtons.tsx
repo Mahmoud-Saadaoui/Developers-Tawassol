@@ -2,6 +2,7 @@ import { Button, Space, Typography } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { useVote } from '../../hooks/useQuestions';
 import { useAuth } from '../../context/AuthContext';
+import { useLocale } from '../../context/LocaleContext';
 import { useNavigate } from 'react-router-dom';
 
 interface VoteButtonsProps {
@@ -19,6 +20,7 @@ export default function VoteButtons({
   vertical = true,
 }: VoteButtonsProps) {
   const { user } = useAuth();
+  const { t } = useLocale();
   const navigate = useNavigate();
   const vote = useVote();
 
@@ -40,7 +42,7 @@ export default function VoteButtons({
         icon={<ArrowUpOutlined />}
         onClick={() => handleVote(1)}
         loading={vote.isPending}
-        aria-label="Upvote"
+        aria-label={t('vote.upvote')}
       />
       <Typography.Text strong style={{ fontSize: 16 }}>
         {votesTotal}
@@ -51,7 +53,7 @@ export default function VoteButtons({
         icon={<ArrowDownOutlined />}
         onClick={() => handleVote(-1)}
         loading={vote.isPending}
-        aria-label="Downvote"
+        aria-label={t('vote.downvote')}
       />
     </Space>
   );

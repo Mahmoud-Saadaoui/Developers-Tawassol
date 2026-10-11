@@ -1,15 +1,17 @@
-import { App as AntdApp, ConfigProvider } from 'antd';
+import { App as AntdApp, ConfigProvider, theme as antdTheme } from 'antd';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ar';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
-import { LocaleProvider } from './context/LocaleContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { LocaleProvider, useLocale } from './context/LocaleContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import enUS from 'antd/locale/en_US';
+import arEG from 'antd/locale/ar_EG';
 import './index.css';
-
-import frFR from 'antd/locale/fr_FR';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,22 +23,69 @@ const queryClient = new QueryClient({
   },
 });
 
+/** Brand tokens — Tawassol (تواصل) : connection / communication. */
+const brand = {
+  light: {
+    colorPrimary: '#4f46e5',
+    colorInfo: '#4f46e5',
+    colorLink: '#4f46e5',
+    borderRadius: 8,
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans Arabic', 'Tahoma', sans-serif",
+  },
+  dark: {
+    colorPrimary: '#818cf8',
+    colorInfo: '#818cf8',
+    colorLink: '#818cf8',
+    borderRadius: 8,
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans Arabic', 'Tahoma', sans-serif",
+  },
+};
+
+/**
+ * Reads the active locale/theme and renders the antd ConfigProvider.
+ * Also keeps `<html lang/dir>` and the dayjs locale in sync.
+ */
+function AppProviders({ children }: { children: React.ReactNode }) {
+  const { locale, dir } = useLocale();
+  const { isDark } = useTheme();
+
+  React.useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = dir;
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    dayjs.locale(locale === 'ar' ? 'ar' : 'en');
+  }, [locale, dir, isDark]);
+
+  return (
+    <ConfigProvider
+      locale={locale === 'ar' ? arEG : enUS}
+      direction={dir}
+      theme={{
+        algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+        token: isDark ? brand.dark : brand.light,
+      }}
+    >
+      <AntdApp>{children}</AntdApp>
+    </ConfigProvider>
+  );
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider locale={frFR}>
-        <AntdApp>
-          <LocaleProvider>
-            <ThemeProvider>
-              <AuthProvider>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
-              </AuthProvider>
-            </ThemeProvider>
-          </LocaleProvider>
-        </AntdApp>
-      </ConfigProvider>
+      <LocaleProvider>
+        <ThemeProvider>
+          <AppProviders>
+            <AuthProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </AuthProvider>
+          </AppProviders>
+        </ThemeProvider>
+      </LocaleProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );
