@@ -402,10 +402,10 @@ VITE_API_URL=http://localhost:5000/api
 - [ ] Tri par score + filtre « sans réponse ».
 
 ### Phase 6 — Profils & Tags (2 j)
-- [ ] `userController` : annuaire, profil public, stats, `PUT /me/profile`.
-- [ ] `tagController` : liste, détail + questions.
-- [ ] Front : `ProfilePage`, `UsersPage`, `DashboardPage`, `TagsPage`, `TagDetailPage`.
-- [ ] Schémas Zod de profil (expérience/éducation/social).
+- [x] `userController` : annuaire, profil public, stats, `PUT /me/profile`.
+- [x] `tagController` : liste, détail + questions.
+- [x] Front : `ProfilePage`, `UsersPage`, `DashboardPage`, `TagsPage`, `TagDetailPage`.
+- [x] Schémas Zod de profil (expérience/éducation/social).
 
 ### Phase 7 — i18n AR/EN + RTL + polish UI (2 j)
 - [ ] `LocaleContext`, dictionnaires `en.json`/`ar.json`, `t()`.

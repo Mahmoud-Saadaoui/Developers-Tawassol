@@ -1,20 +1,61 @@
+export interface Experience {
+  _id?: string;
+  title: string;
+  company: string;
+  location?: string;
+  from: string;
+  to?: string;
+  current: boolean;
+  description?: string;
+}
+
+export interface Education {
+  _id?: string;
+  school: string;
+  degree: string;
+  fieldofstudy: string;
+  from: string;
+  to?: string;
+  current: boolean;
+  description?: string;
+}
+
+export interface SocialLinks {
+  youtube?: string;
+  twitter?: string;
+  facebook?: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
+export interface UserProfile {
+  headline?: string;
+  bio?: string;
+  location?: string;
+  website?: string;
+  github?: string;
+  skills: string[];
+  social: SocialLinks;
+  experience: Experience[];
+  education: Education[];
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
   avatar?: { url: string; publicId: string };
-  profile?: {
-    headline?: string;
-    bio?: string;
-    location?: string;
-    website?: string;
-    github?: string;
-    skills: string[];
-    social: Record<string, string>;
-    experience: unknown[];
-    education: unknown[];
-  };
+  profile?: Partial<UserProfile>;
   createdAt: string;
+}
+
+/** Public profile page stats (`GET /api/users/:id`). */
+export interface UserStats {
+  questions: number;
+  answers: number;
+  votesTotal: number;
+  views: number;
+  acceptedAnswers: number;
 }
 
 export interface Tag {

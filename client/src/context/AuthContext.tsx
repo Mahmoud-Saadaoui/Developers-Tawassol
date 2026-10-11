@@ -1,24 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { http } from '../api/http';
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: { url: string };
-  profile: {
-    headline?: string;
-    bio?: string;
-    location?: string;
-    website?: string;
-    github?: string;
-    skills: string[];
-    social: Record<string, string>;
-    experience: unknown[];
-    education: unknown[];
-  };
-  createdAt: string;
-}
+import type { User } from '../types';
 
 interface AuthContextValue {
   user: User | null;

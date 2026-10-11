@@ -6,6 +6,7 @@ import uploadRouter from '../controllers/uploadController';
 import questionRouter from '../controllers/questionController';
 import voteRouter from '../controllers/voteController';
 import tagRouter from '../controllers/tagController';
+import userRouter from '../controllers/userController';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/upload', uploadRouter);
 router.use('/questions', questionRouter);
 router.use('/votes', voteRouter);
 router.use('/tags', tagRouter);
+router.use('/users', userRouter);
 
 export default router;

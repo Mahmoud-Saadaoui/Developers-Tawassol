@@ -1,5 +1,5 @@
 import { App as AntdApp, Button, Dropdown, Space } from 'antd';
-import { LogoutOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { IdcardOutlined, LogoutOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLocale } from '../../context/LocaleContext';
@@ -31,6 +31,7 @@ export default function Navbar() {
           Tawassol
         </Link>
         <Link to="/tags">Tags</Link>
+        <Link to="/users">Développeurs</Link>
       </Space>
 
       <Space>
@@ -48,6 +49,12 @@ export default function Navbar() {
             <Dropdown
               menu={{
                 items: [
+                  {
+                    key: 'profile',
+                    icon: <IdcardOutlined />,
+                    label: 'Mon profil',
+                    onClick: () => navigate('/dashboard'),
+                  },
                   {
                     key: 'logout',
                     icon: <LogoutOutlined />,

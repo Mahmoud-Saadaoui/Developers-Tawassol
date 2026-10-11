@@ -9,6 +9,9 @@ import AskPage from './pages/AskPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import TagsPage from './pages/TagsPage';
 import TagDetailPage from './pages/TagDetailPage';
+import UsersPage from './pages/UsersPage';
+import ProfilePage from './pages/ProfilePage';
+import DashboardPage from './pages/DashboardPage';
 
 export default function App() {
   return (
@@ -20,10 +23,13 @@ export default function App() {
         <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
         <Route path="/tags" element={<TagsPage />} />
         <Route path="/tags/:slug" element={<TagDetailPage />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/users/:id" element={<ProfilePage />} />
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/ask" element={<AskPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Route>
 
         <Route path="/questions/:id" element={<QuestionDetailPage />} />
