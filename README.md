@@ -1,10 +1,10 @@
 # Tawassol
 
-**Tawassol (تواصل)** — Plateforme Q&R communautaire pour développeurs, avec profils développeurs, en **FR/AR (RTL)**.
+**Tawassol (تواصل)** — Plateforme Q&R communautaire pour développeurs, avec profils développeurs, en **AR/EN (RTL)**.
 
 ## Aperçu
 
-Tawassol permet aux développeurs de poser des questions, répondre, voter et gérer leur profil. L'interface est bilingue français/arabe avec support complet du RTL.
+Tawassol permet aux développeurs de poser des questions, répondre, voter et gérer leur profil. L'interface est bilingue anglais/arabe avec support complet du RTL.
 
 ## Stack
 
@@ -53,6 +53,8 @@ tawassol/
 └─ README.md  # Ce fichier
 ```
 
+> `client/` et `server/` sont **autonomes** : chacun gère ses propres dépendances (`npm install`) et possède son propre `.gitignore`. Aucun `package.json` ni `node_modules` à la racine.
+
 ## Fonctionnalités
 
 - [x] Authentification locale (email + mot de passe)
@@ -62,7 +64,7 @@ tawassol/
 - [x] Votes et réponses acceptées
 - [x] Tags et filtrage
 - [x] Upload d'images (Cloudinary)
-- [ ] Interface FR/AR (RTL)
+- [ ] Interface AR/EN (RTL)
 - [ ] Déploiement en production
 
 ## Documentation

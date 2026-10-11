@@ -106,7 +106,7 @@ const userSchema = new mongoose.Schema<IUser>(
       ],
     },
   },
-  { timestamps: true },
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
 
 export const User = mongoose.model<IUser>('User', userSchema);

@@ -18,7 +18,7 @@ export function configurePassport() {
         {
           clientID: env.oauth.google.clientId,
           clientSecret: env.oauth.google.clientSecret,
-          callbackURL: '/api/auth/google/callback',
+          callbackURL: `${env.serverUrl}/api/auth/google/callback`,
           scope: ['profile', 'email'],
         },
         async (_accessToken, _refreshToken, profile, done) => {
@@ -48,7 +48,7 @@ export function configurePassport() {
         {
           clientID: env.oauth.github.clientId,
           clientSecret: env.oauth.github.clientSecret,
-          callbackURL: '/api/auth/github/callback',
+          callbackURL: `${env.serverUrl}/api/auth/github/callback`,
           scope: ['user:email'],
         },
         async (
@@ -83,7 +83,7 @@ export function configurePassport() {
         {
           clientID: env.oauth.linkedin.clientId,
           clientSecret: env.oauth.linkedin.clientSecret,
-          callbackURL: '/api/auth/linkedin/callback',
+          callbackURL: `${env.serverUrl}/api/auth/linkedin/callback`,
           scope: ['r_emailaddress', 'r_liteprofile'],
         },
         async (

@@ -42,6 +42,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
+  // Global 401 handler (emitted by `http.ts`): clear the session when the
+  // token has expired or become invalid.
+  useEffect(() => {
+    const onUnauthorized = () => setUser(null);
+    window.addEventListener('auth:unauthorized', onUnauthorized);
+    return () => window.removeEventListener('auth:unauthorized', onUnauthorized);
+  }, []);
+
   const login = async (email: string, password: string) => {
     const data = await http<{ user: User }>('/auth/login', {
       method: 'POST',

@@ -17,6 +17,9 @@ export const env = {
   isProd: process.env.NODE_ENV === 'production',
   port: Number(process.env.PORT ?? 5000),
   clientUrl: process.env.CLIENT_URL ?? 'http://localhost:5173',
+  // Public URL of this API (used to build absolute OAuth callback URLs).
+  serverUrl:
+    process.env.SERVER_URL ?? `http://localhost:${Number(process.env.PORT ?? 5000)}`,
 
   mongoUri: process.env.MONGO_URI as string,
 
@@ -24,6 +27,9 @@ export const env = {
     secret: process.env.JWT_SECRET as string,
     expiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
   },
+
+  // Secret for the short-lived cookie session that carries the OAuth `state`.
+  sessionSecret: process.env.SESSION_SECRET ?? (process.env.JWT_SECRET as string),
 
   oauth: {
     google: {

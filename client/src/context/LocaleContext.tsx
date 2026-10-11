@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-type Locale = 'fr' | 'ar';
+type Locale = 'en' | 'ar';
 
 interface LocaleContextValue {
   locale: Locale;
@@ -9,14 +9,14 @@ interface LocaleContextValue {
 }
 
 const LocaleContext = createContext<LocaleContextValue>({
-  locale: 'fr',
+  locale: 'en',
   setLocale: () => {},
   dir: 'ltr',
 });
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(
-    () => (localStorage.getItem('locale') as Locale) || 'fr',
+    () => (localStorage.getItem('locale') as Locale) || 'en',
   );
 
   const setLocale = (next: Locale) => {

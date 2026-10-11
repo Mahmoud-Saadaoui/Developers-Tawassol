@@ -1,6 +1,6 @@
 # 📘 Tawassol — Plan détaillé du MVP
 
-> **Tawassol (تواصل)** — Plateforme Q&R communautaire pour développeurs, avec profils développeurs, en **FR/AR (RTL)**.
+> **Tawassol (تواصل)** — Plateforme Q&R communautaire pour développeurs, avec profils développeurs, en **AR/EN (RTL)**.
 > Date : 2026-10-10 · Version MVP 1.0
 
 ---
@@ -13,7 +13,7 @@ Permettre à un visiteur de :
 2. Compléter son **profil développeur** (bio, compétences, expérience, éducation, liens, réseaux sociaux) + **avatar**.
 3. **Poser une question** taguée (avec images éventuelles) et **répondre** à des questions.
 4. **Voter** (up/down) sur questions et réponses, **accepter** une réponse.
-5. Naviguer en **Français ou Arabe (RTL)**.
+5. Naviguer en **Anglais ou Arabe (RTL)**.
 
 ### Hors périmètre (v1.0)
 Temps réel (WebSocket/SSE) · messagerie privée · recherche plein texte avancée · notifications · modération · édition riche WYSIWYG (on reste sur Markdown) · tests automatisés (prévus en phase 8).
@@ -39,7 +39,9 @@ Temps réel (WebSocket/SSE) · messagerie privée · recherche plein texte avanc
 
 ---
 
-## 3. Structure du monorepo
+## 3. Structure du projet
+
+> La racine ne contient que `client/`, `server/`, `plan.md` et `README.md`. **Chaque dossier est autonome** : ses propres dépendances (`package.json`, `node_modules`) et son propre `.gitignore`. Aucun outillage partagé à la racine.
 
 ```
 tawassol/
@@ -76,7 +78,7 @@ tawassol/
 │  │  │  ├─ LoginPage.tsx · RegisterPage.tsx
 │  │  │  └─ OAuthCallbackPage.tsx
 │  │  ├─ i18n/
-│  │  │  ├─ fr.json · ar.json
+│  │  │  ├─ en.json · ar.json
 │  │  │  ├─ index.ts
 │  │  ├─ utils/                   # cn.ts, date.ts
 │  │  ├─ App.tsx · main.tsx · vite-env.d.ts
@@ -279,7 +281,7 @@ POST /register|login              GET /api/auth/:provider
 
 ### Context (store global)
 - **AuthContext** : `user, loading, login, register, logout, refreshUser`. Persiste via `/api/auth/me` au montage.
-- **LocaleContext** : `locale ('fr'|'ar'), setLocale, dir ('ltr'|'rtl'), t(key, params)`. Persiste dans `localStorage`.
+- **LocaleContext** : `locale ('en'|'ar'), setLocale, dir ('ltr'|'rtl'), t(key, params)`. Persiste dans `localStorage`. Locale par défaut : `en`.
 - **ThemeContext** : `mode ('light'|'dark')` → antd `ConfigProvider theme` + Tailwind classes.
 
 ### TanStack Query
@@ -301,8 +303,8 @@ POST /register|login              GET /api/auth/:provider
 ```
 
 ### i18n & RTL
-- `LocaleContext` + dictionnaires `fr.json` / `ar.json`, fonction `t()`.
-- antd `ConfigProvider locale={ar / fr}` + `dir` + `componentSize`.
+- `LocaleContext` + dictionnaires `en.json` / `ar.json`, fonction `t()`.
+- antd `ConfigProvider locale={ar / en}` + `dir` + `componentSize`.
 - HTML `<html dir="rtl" lang="ar">` ajusté à la locale.
 - Utiliser les utilitaires logiques CSS (`ms-`, `me-`, `ps-`, `pe-`, `text-start/end`) + antd v5 RTL natif.
 
@@ -362,7 +364,7 @@ VITE_API_URL=http://localhost:5000/api
 - [ ] Init **Vite** + React + TS + antd + TanStack Query + React Router + Contexts.
 - [ ] Init **Express** + TS + Mongoose + `db.ts` (cache global) + `app.ts`/`server.ts`.
 - [ ] CORS + proxy Vite (`/api` → `:5000`) + `errorHandler` + `asyncHandler`.
-- [ ] Scripts `dev` / `build` / `start` (client & server) + `concurrently`.
+- [ ] Scripts `dev` / `build` / `start` dans **chaque** dossier (`client`, `server`) — pas de `package.json` racine.
 - [ ] Lire `.env` (dotenv), `zod` installé des deux côtés.
 
 ### Phase 1 — Auth local (2 j)
@@ -405,8 +407,8 @@ VITE_API_URL=http://localhost:5000/api
 - [ ] Front : `ProfilePage`, `UsersPage`, `DashboardPage`, `TagsPage`, `TagDetailPage`.
 - [ ] Schémas Zod de profil (expérience/éducation/social).
 
-### Phase 7 — i18n FR/AR + RTL + polish UI (2 j)
-- [ ] `LocaleContext`, dictionnaires `fr.json`/`ar.json`, `t()`.
+### Phase 7 — i18n AR/EN + RTL + polish UI (2 j)
+- [ ] `LocaleContext`, dictionnaires `en.json`/`ar.json`, `t()`.
 - [ ] antd `ConfigProvider` (locale + dir + theme), `<html dir>`.
 - [ ] Sélecteur de langue dans la Navbar.
 - [ ] Thème clair/sombre (`ThemeContext`), design system tokens.
@@ -437,7 +439,7 @@ VITE_API_URL=http://localhost:5000/api
 ✅ Répondre / modifier / supprimer
 ✅ Voter (toggle) + réponse acceptée
 ✅ Tags + filtrage
-✅ Interface FR & AR (RTL) correcte, responsive
+✅ Interface AR & EN (RTL) correcte, responsive
 ✅ Déployé en ligne avec données de démo
 
 ---
