@@ -3,11 +3,6 @@
 **Tawassol (تواصل)** — A community Q&A platform for developers, with developer
 profiles, in **AR/EN (RTL)**.
 
-> [!IMPORTANT]
-> This repository is a **validation MVP**: the functional journey is complete and
-> tested, but a few **hardening** items remain before a real production release.
-> See [Known limitations](#known-limitations) and [Deployment](#deployment).
-
 ---
 
 ## Table of contents
@@ -44,7 +39,6 @@ bilingual **English / Arabic** with full **RTL** support and a light/dark theme.
 - [x] Developer directory + public profiles with stats
 - [x] AR/EN UI (RTL), light/dark theme, responsive
 - [x] Backend tests + frontend component tests + Playwright E2E
-- [x] Demo seed
 
 ---
 
@@ -104,17 +98,6 @@ cp .env.example .env      # ← VITE_API_URL=http://localhost:5000/api
 npm install
 npm run dev               # → http://localhost:5173
 ```
-
-Demo accounts created by `npm run seed`:
-
-| Email                  | Password      |
-| ---------------------- | ------------- |
-| `amine@tawassol.dev`   | `password123` |
-| `sara@tawassol.dev`    | `password123` |
-| `youssef@tawassol.dev` | `password123` |
-| `lina@tawassol.dev`    | `password123` |
-| `omar@tawassol.dev`    | `password123` |
-
 ---
 
 ## Environment variables
@@ -299,39 +282,6 @@ cd client && npm run test:e2e
 - Mongo indexes on query fields (`type`, `parent`, `tags`, `author`,
   `createdAt`) + text index `{ title, content }`.
 - Bounded pagination (`limit` max 50), targeted `select`/`populate`.
-
----
-
-## Known limitations
-
-Scope deliberately kept small for v1.0, but worth knowing before a real
-production release.
-
-### Out of scope (by design)
-
-- Notifications, private messaging, moderation, advanced search.
-- Email verification, forgot password, refresh token / JWT revocation.
-- Real-time (WebSocket/SSE).
-
-### To harden (security & robustness)
-
-- **Cross-site cookies**: see the
-  [Cookies & domain](#cookies--domain-to-settle-before-going-live) section.
-- **No rate limiting** on `/auth/login` and `/auth/register` (brute-force).
-- **`POST /api/tags` is unauthenticated**: tag creation is open to everyone.
-- **In-memory OAuth session** (`express-session` MemoryStore): fine for a single
-  instance, to be replaced with a shared store if the API scales.
-- **`npm run seed` wipes the database**: keep it to development (no `NODE_ENV`
-  guard).
-
-### To fix (correctness)
-
-- **Editing a question's tags does not recompute `questionsCount`**: tag counters
-  can drift.
-- **Approximate view counter**: it increments on every load (including
-  refetch), not per unique visitor.
-- **E2E not run in CI**: no pipeline is provided; Playwright tests are run
-  manually.
 
 ---
 
