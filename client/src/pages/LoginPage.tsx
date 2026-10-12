@@ -1,8 +1,8 @@
 import { App as AntdApp, Button, Card, Divider, Form, Input, Typography } from 'antd';
-import { GithubOutlined, GoogleOutlined, LinkedinOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLocale } from '../context/LocaleContext';
+import OAuthButtons from '../components/auth/OAuthButtons';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -24,17 +24,7 @@ export default function LoginPage() {
     <Card style={{ maxWidth: 400, margin: '40px auto' }}>
       <Typography.Title level={3}>{t('auth.loginTitle')}</Typography.Title>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
-        <Button icon={<GoogleOutlined />} onClick={() => (window.location.href = '/api/auth/google')}>
-          {t('auth.continueGoogle')}
-        </Button>
-        <Button icon={<GithubOutlined />} onClick={() => (window.location.href = '/api/auth/github')}>
-          {t('auth.continueGithub')}
-        </Button>
-        <Button icon={<LinkedinOutlined />} onClick={() => (window.location.href = '/api/auth/linkedin')}>
-          {t('auth.continueLinkedin')}
-        </Button>
-      </div>
+      <OAuthButtons />
 
       <Divider>{t('common.or')}</Divider>
 

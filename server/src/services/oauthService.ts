@@ -1,7 +1,7 @@
 import { IUser, User } from '../models/User';
 
 export interface OAuthProfile {
-  provider: 'google' | 'github' | 'linkedin';
+  provider: 'google' | 'github';
   providerId: string;
   name: string;
   email: string;
@@ -12,9 +12,7 @@ export interface OAuthProfile {
  * Find or create a user from an OAuth profile.
  * If the email already exists, link the provider to the existing account.
  */
-export async function findOrCreateOAuthUser(
-  profile: OAuthProfile,
-): Promise<IUser> {
+export async function findOrCreateOAuthUser(profile: OAuthProfile): Promise<IUser> {
   // Try to find by provider first
   let user = await User.findOne({
     provider: profile.provider,
@@ -41,9 +39,7 @@ export async function findOrCreateOAuthUser(
     email: profile.email.toLowerCase(),
     provider: profile.provider,
     providerId: profile.providerId,
-    avatar: profile.avatarUrl
-      ? { url: profile.avatarUrl, publicId: '' }
-      : undefined,
+    avatar: profile.avatarUrl ? { url: profile.avatarUrl, publicId: '' } : undefined,
   });
 
   return user;

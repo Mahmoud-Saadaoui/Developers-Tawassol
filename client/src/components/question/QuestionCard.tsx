@@ -1,10 +1,11 @@
-import { Card, Space, Typography, Avatar } from 'antd';
+import { Card, Space, Typography } from 'antd';
 import { MessageOutlined, EyeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import type { Post } from '../../types';
 import { useLocale } from '../../context/LocaleContext';
 import TagChip from './TagChip';
 import VoteButtons from './VoteButtons';
+import UserAvatar from '../common/UserAvatar';
 
 const { Text, Paragraph } = Typography;
 
@@ -18,7 +19,11 @@ export default function QuestionCard({ question }: QuestionCardProps) {
   return (
     <Card size="small" style={{ marginBottom: 12 }}>
       <Space align="start" style={{ width: '100%' }}>
-        <VoteButtons postId={question.id} votesTotal={question.votesTotal} votes={question.votes} />
+        <VoteButtons
+          postId={question.id}
+          votesTotal={question.votesTotal}
+          votes={question.votes}
+        />
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <Link to={`/questions/${question.id}`}>
@@ -37,12 +42,16 @@ export default function QuestionCard({ question }: QuestionCardProps) {
 
           <Space size={16} wrap>
             <Space size={4}>
-              <Avatar size={20} src={question.author.avatar?.url} />
-              <Text type="secondary">{question.author.name}</Text>
+              <UserAvatar size={20} user={question.author} />
+              <Text type="secondary">
+                {question.author?.name ?? t('common.deletedUser')}
+              </Text>
             </Space>
             <Space size={4}>
               <MessageOutlined />
-              <Text type="secondary">{t('common.answers', { count: question.answersCount })}</Text>
+              <Text type="secondary">
+                {t('common.answers', { count: question.answersCount })}
+              </Text>
             </Space>
             <Space size={4}>
               <EyeOutlined />

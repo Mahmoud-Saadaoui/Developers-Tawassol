@@ -5,6 +5,7 @@
     "users": "المطوّرون",
     "ask": "اطرح سؤالاً",
     "myProfile": "ملفي الشخصي",
+    "language": "اللغة",
     "logout": "تسجيل الخروج",
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
@@ -24,7 +25,8 @@
     "views": "{count} مشاهدة",
     "questions": "{count} سؤال",
     "publish": "نشر",
-    "upload": "رفع"
+    "upload": "رفع",
+    "deletedUser": "مستخدم محذوف"
   },
   "auth": {
     "loginTitle": "تسجيل الدخول",
@@ -35,7 +37,6 @@
     "registerError": "فشل إنشاء الحساب",
     "continueGoogle": "المتابعة عبر Google",
     "continueGithub": "المتابعة عبر GitHub",
-    "continueLinkedin": "المتابعة عبر LinkedIn",
     "email": "البريد الإلكتروني",
     "emailInvalid": "بريد إلكتروني غير صالح",
     "password": "كلمة المرور",
@@ -55,7 +56,9 @@
     "sortNewest": "الأحدث",
     "sortVotes": "الأعلى تصويتاً",
     "sortUnanswered": "بدون إجابة",
-    "empty": "لا توجد أسئلة بعد"
+    "searchPlaceholder": "ابحث في الأسئلة…",
+    "empty": "لا توجد أسئلة بعد",
+    "noResults": "لا توجد أسئلة مطابقة لبحثك"
   },
   "ask": {
     "title": "اطرح سؤالاً",

@@ -12,7 +12,11 @@ interface EditQuestionFormProps {
 }
 
 /** Inline form used to edit an existing question (author only). */
-export default function EditQuestionForm({ question, onCancel, onSaved }: EditQuestionFormProps) {
+export default function EditQuestionForm({
+  question,
+  onCancel,
+  onSaved,
+}: EditQuestionFormProps) {
   const { message } = AntdApp.useApp();
   const { t } = useLocale();
   const { data: tags } = useTags();
@@ -20,7 +24,9 @@ export default function EditQuestionForm({ question, onCancel, onSaved }: EditQu
 
   const [title, setTitle] = useState(question.title ?? '');
   const [content, setContent] = useState(question.content);
-  const [selectedTags, setSelectedTags] = useState<string[]>(question.tags.map((tag) => tag.id));
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    question.tags.map((tag) => tag.id),
+  );
 
   const handleSave = async () => {
     try {

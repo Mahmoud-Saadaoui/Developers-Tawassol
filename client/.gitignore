@@ -1,9 +1,27 @@
+# Dependencies
 node_modules
+
+# Build output
 dist
+dist-ssr
 build
+.vite
+
+# Environment
 .env
-.env.local
+.env.*
+!.env.example
+
+# Logs & OS
 *.log
 .DS_Store
+Thumbs.db
+
+# Tests / tooling
 coverage
-.vite
+.eslintcache
+playwright-report
+test-results
+
+# Deploy
+.vercel

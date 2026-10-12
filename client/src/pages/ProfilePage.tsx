@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Col, Empty, Pagination, Row, Space, Spin, Statistic, Tag, Typography } from 'antd';
+import {
+  Card,
+  Col,
+  Empty,
+  Pagination,
+  Row,
+  Space,
+  Spin,
+  Statistic,
+  Tag,
+  Typography,
+} from 'antd';
 import { useUser, useUserQuestions } from '../hooks/useUsers';
 import { useLocale } from '../context/LocaleContext';
 import ProfileHeader from '../components/profile/ProfileHeader';
@@ -16,7 +27,8 @@ export default function ProfilePage() {
   const { data, isLoading } = useUser(id);
   const { data: questionsData, isLoading: questionsLoading } = useUserQuestions(id, page);
 
-  if (isLoading) return <Spin size="large" style={{ display: 'block', margin: '80px auto' }} />;
+  if (isLoading)
+    return <Spin size="large" style={{ display: 'block', margin: '80px auto' }} />;
   if (!data) return <Empty description={t('profile.notFound')} />;
 
   const { user, stats } = data;

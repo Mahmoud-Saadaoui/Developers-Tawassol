@@ -15,9 +15,7 @@ export function errorHandler(
   _next: NextFunction,
 ) {
   if (err instanceof ApiError) {
-    return res
-      .status(err.statusCode)
-      .json({ message: err.message, errors: err.errors });
+    return res.status(err.statusCode).json({ message: err.message, errors: err.errors });
   }
 
   // Malformed JSON body

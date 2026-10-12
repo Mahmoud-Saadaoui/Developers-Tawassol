@@ -53,7 +53,7 @@ function cleanProfile(profile: Record<string, unknown>): Record<string, unknown>
   return cleaned;
 }
 
-/* ─── Developer directory (annuaire) ─── */
+/* ─── Developer directory ─── */
 
 router.get(
   '/',
@@ -133,7 +133,14 @@ router.get(
       ]),
       Post.aggregate([
         { $match: { type: 'answer', author: user._id } },
-        { $lookup: { from: 'posts', localField: 'parent', foreignField: '_id', as: 'parent' } },
+        {
+          $lookup: {
+            from: 'posts',
+            localField: 'parent',
+            foreignField: '_id',
+            as: 'parent',
+          },
+        },
         { $unwind: '$parent' },
         { $match: { $expr: { $eq: ['$parent.acceptedAnswer', '$_id'] } } },
         { $count: 'total' },

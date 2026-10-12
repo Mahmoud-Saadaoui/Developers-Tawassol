@@ -18,7 +18,9 @@ export default function TagDetailPage() {
   return (
     <div>
       <Title level={2}>{tag.name}</Title>
-      {tag.description && <Typography.Paragraph type="secondary">{tag.description}</Typography.Paragraph>}
+      {tag.description && (
+        <Typography.Paragraph type="secondary">{tag.description}</Typography.Paragraph>
+      )}
       <Typography.Text type="secondary">
         {t('common.questions', { count: tag.questionsCount })}
       </Typography.Text>

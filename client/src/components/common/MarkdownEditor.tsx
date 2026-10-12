@@ -22,17 +22,36 @@ export default function MarkdownEditor({
   return (
     <div>
       <Space style={{ marginBottom: 8 }}>
-        <Button size="small" type={preview ? 'default' : 'primary'} onClick={() => setPreview(false)}>
+        <Button
+          size="small"
+          type={preview ? 'default' : 'primary'}
+          onClick={() => setPreview(false)}
+        >
           {t('markdown.write')}
         </Button>
-        <Button size="small" type={preview ? 'primary' : 'default'} onClick={() => setPreview(true)}>
+        <Button
+          size="small"
+          type={preview ? 'primary' : 'default'}
+          onClick={() => setPreview(true)}
+        >
           {t('markdown.preview')}
         </Button>
       </Space>
 
       {preview ? (
-        <div style={{ border: '1px solid #d9d9d9', borderRadius: 6, padding: 12, minHeight: 120 }}>
-          {value ? <Markdown content={value} /> : <em style={{ color: '#999' }}>{t('markdown.empty')}</em>}
+        <div
+          style={{
+            border: '1px solid #d9d9d9',
+            borderRadius: 6,
+            padding: 12,
+            minHeight: 120,
+          }}
+        >
+          {value ? (
+            <Markdown content={value} />
+          ) : (
+            <em style={{ color: '#999' }}>{t('markdown.empty')}</em>
+          )}
         </div>
       ) : (
         <textarea

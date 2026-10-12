@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Avatar, Space, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 import {
   CalendarOutlined,
   EnvironmentOutlined,
@@ -14,6 +14,7 @@ import {
 import type { User } from '../../types';
 import { useLocale } from '../../context/LocaleContext';
 import { formatDate } from '../../utils/date';
+import UserAvatar from '../common/UserAvatar';
 
 const { Title, Text } = Typography;
 
@@ -36,9 +37,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
 
   return (
     <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
-      <Avatar size={96} src={user.avatar?.url} style={{ flexShrink: 0 }}>
-        {user.name?.[0]?.toUpperCase()}
-      </Avatar>
+      <UserAvatar size={96} user={user} style={{ flexShrink: 0 }} />
 
       <div style={{ flex: 1, minWidth: 260 }}>
         <Title level={3} style={{ marginBottom: 4 }}>

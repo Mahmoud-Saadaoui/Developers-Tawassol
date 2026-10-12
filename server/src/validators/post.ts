@@ -23,4 +23,6 @@ export const listQuestionsSchema = z.object({
   limit: z.coerce.number().int().positive().max(50).default(10),
   sort: z.enum(['newest', 'votes', 'unanswered']).default('newest'),
   tag: z.string().optional(),
+  /** Full-text search term (uses the Mongo `$text` index on title/content). */
+  search: z.string().trim().max(120).optional(),
 });

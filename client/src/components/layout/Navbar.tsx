@@ -1,15 +1,17 @@
-import { App as AntdApp, Button, Dropdown, Space, Tooltip } from 'antd';
+import { App as AntdApp, Button, Dropdown, Space, Tooltip, type MenuProps } from 'antd';
 import {
   BulbOutlined,
+  CheckOutlined,
+  GlobalOutlined,
   IdcardOutlined,
   LogoutOutlined,
   PlusOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLocale } from '../../context/LocaleContext';
 import { useTheme } from '../../context/ThemeContext';
+import UserAvatar from '../common/UserAvatar';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -24,17 +26,75 @@ export default function Navbar() {
     navigate('/');
   };
 
+  const languageItems: MenuProps['items'] = [
+    {
+      key: 'en',
+      icon: locale === 'en' ? <CheckOutlined /> : null,
+      label: 'English',
+      onClick: () => setLocale('en'),
+    },
+    {
+      key: 'ar',
+      icon: locale === 'ar' ? <CheckOutlined /> : null,
+      label: 'العربية',
+      onClick: () => setLocale('ar'),
+    },
+  ];
+
+  const userMenuItems: MenuProps['items'] = user
+    ? [
+        {
+          key: 'identity',
+          disabled: true,
+          label: (
+            <div style={{ padding: '2px 0', minWidth: 160 }}>
+              <div style={{ fontWeight: 600, lineHeight: 1.5 }}>{user.name}</div>
+              <div style={{ fontSize: 12, opacity: 0.65 }}>{user.email}</div>
+            </div>
+          ),
+        },
+        { type: 'divider' },
+        {
+          key: 'profile',
+          icon: <IdcardOutlined />,
+          label: t('nav.myProfile'),
+          onClick: () => navigate('/dashboard'),
+        },
+        {
+          key: 'language',
+          icon: <GlobalOutlined />,
+          label: t('nav.language'),
+          children: languageItems,
+        },
+        {
+          key: 'theme',
+          icon: <BulbOutlined />,
+          label: isDark ? t('nav.themeLight') : t('nav.themeDark'),
+          onClick: toggle,
+        },
+        { type: 'divider' },
+        {
+          key: 'logout',
+          icon: <LogoutOutlined />,
+          label: t('nav.logout'),
+          danger: true,
+          onClick: handleLogout,
+        },
+      ]
+    : [];
+
   return (
-    <div
+    <header
       style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        gap: 12,
         padding: '12px 24px',
         borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
       }}
     >
-      <Space size={16}>
+      <Space size={16} className="site-nav" wrap>
         <Link to="/" style={{ fontWeight: 700, fontSize: 18 }}>
           {t('nav.brand')}
         </Link>
@@ -43,18 +103,6 @@ export default function Navbar() {
       </Space>
 
       <Space>
-        <Button onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}>
-          {locale === 'en' ? 'العربية' : 'EN'}
-        </Button>
-
-        <Tooltip title={isDark ? t('nav.themeLight') : t('nav.themeDark')}>
-          <Button
-            icon={<BulbOutlined />}
-            onClick={toggle}
-            aria-label={isDark ? t('nav.themeLight') : t('nav.themeDark')}
-          />
-        </Tooltip>
-
         {user ? (
           <>
             <Link to="/ask">
@@ -62,29 +110,37 @@ export default function Navbar() {
                 {t('nav.ask')}
               </Button>
             </Link>
+
             <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: 'profile',
-                    icon: <IdcardOutlined />,
-                    label: t('nav.myProfile'),
-                    onClick: () => navigate('/dashboard'),
-                  },
-                  {
-                    key: 'logout',
-                    icon: <LogoutOutlined />,
-                    label: t('nav.logout'),
-                    onClick: handleLogout,
-                  },
-                ],
-              }}
+              menu={{ items: userMenuItems }}
+              trigger={['click']}
+              placement="bottomRight"
             >
-              <Button icon={<UserOutlined />}>{user.name}</Button>
+              <Tooltip title={user.name} placement="bottom">
+                <Button
+                  type="text"
+                  aria-label={t('nav.myProfile')}
+                  style={{ height: 'auto', padding: 4 }}
+                >
+                  <UserAvatar size={36} user={user} />
+                </Button>
+              </Tooltip>
             </Dropdown>
           </>
         ) : (
           <>
+            <Button onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}>
+              {locale === 'en' ? 'العربية' : 'EN'}
+            </Button>
+
+            <Tooltip title={isDark ? t('nav.themeLight') : t('nav.themeDark')}>
+              <Button
+                icon={<BulbOutlined />}
+                onClick={toggle}
+                aria-label={isDark ? t('nav.themeLight') : t('nav.themeDark')}
+              />
+            </Tooltip>
+
             <Link to="/login">
               <Button>{t('nav.login')}</Button>
             </Link>
@@ -94,6 +150,6 @@ export default function Navbar() {
           </>
         )}
       </Space>
-    </div>
+    </header>
   );
 }

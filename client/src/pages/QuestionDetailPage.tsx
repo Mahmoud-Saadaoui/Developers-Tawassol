@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   App as AntdApp,
-  Avatar,
   Button,
   Card,
   Empty,
@@ -28,6 +27,7 @@ import VoteButtons from '../components/question/VoteButtons';
 import TagChip from '../components/question/TagChip';
 import AnswerItem from '../components/question/AnswerItem';
 import EditQuestionForm from '../components/question/EditQuestionForm';
+import UserAvatar from '../components/common/UserAvatar';
 
 const { Title, Text } = Typography;
 
@@ -50,7 +50,7 @@ export default function QuestionDetailPage() {
   if (isLoading) return <Empty description={t('common.loading')} />;
   if (!question) return <Empty description={t('questionDetail.notFound')} />;
 
-  const isAuthor = user?.id === question.author.id;
+  const isAuthor = user?.id === question.author?.id;
 
   const handleAnswer = async () => {
     try {
@@ -102,11 +102,15 @@ export default function QuestionDetailPage() {
               <Title level={3}>{question.title}</Title>
               <Space size={16} style={{ marginBottom: 12 }} wrap>
                 <Space size={4}>
-                  <Avatar size={24} src={question.author.avatar?.url} />
-                  <Text type="secondary">{question.author.name}</Text>
+                  <UserAvatar size={24} user={question.author} />
+                  <Text type="secondary">
+                    {question.author?.name ?? t('common.deletedUser')}
+                  </Text>
                 </Space>
                 <Text type="secondary">{formatDate(question.createdAt)}</Text>
-                <Text type="secondary">{t('common.views', { count: question.views })}</Text>
+                <Text type="secondary">
+                  {t('common.views', { count: question.views })}
+                </Text>
               </Space>
               <Markdown content={question.content} />
               <Space style={{ marginTop: 12 }} wrap>
@@ -116,7 +120,11 @@ export default function QuestionDetailPage() {
               </Space>
               {isAuthor && (
                 <Space style={{ marginTop: 12 }}>
-                  <Button size="small" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+                  <Button
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={() => setEditing(true)}
+                  >
                     {t('questionDetail.edit')}
                   </Button>
                   <Popconfirm

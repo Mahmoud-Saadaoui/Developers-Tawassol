@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { Post, IPost } from '../models/Post';
+import { Post } from '../models/Post';
 import { Tag } from '../models/Tag';
 import { ApiError } from '../utils/ApiError';
 import { asyncHandler } from '../utils/asyncHandler';
@@ -22,16 +22,19 @@ router.get(
   '/',
   validate(listQuestionsSchema, 'query'),
   asyncHandler(async (req: AuthRequest, res: Response) => {
-    const { page, limit, sort, tag } = req.query as unknown as {
+    const { page, limit, sort, tag, search } = req.query as unknown as {
       page: number;
       limit: number;
       sort: string;
       tag?: string;
+      search?: string;
     };
 
     const query: Record<string, unknown> = { type: 'question', parent: null };
     if (tag) query.tags = tag;
     if (sort === 'unanswered') query.answersCount = 0;
+    // Full-text search via the `{ title: 'text', content: 'text' }` index.
+    if (search) query.$text = { $search: search };
 
     const sortOption: Record<string, 1 | -1> =
       sort === 'votes' ? { votesTotal: -1, createdAt: -1 } : { createdAt: -1 };
@@ -60,17 +63,17 @@ router.get(
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const post = await Post.findOne({
-      _id: req.params.id,
-      type: 'question',
-    })
+    // Atomically bump the view counter and return the updated document so the
+    // response always reflects the current count.
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id, type: 'question' },
+      { $inc: { views: 1 } },
+      { new: true },
+    )
       .populate('author', 'name email avatar profile')
       .populate('tags', 'name slug');
 
     if (!post) throw ApiError.notFound('Question not found');
-
-    // Increment views
-    await Post.updateOne({ _id: post._id }, { $inc: { views: 1 } });
 
     res.json(post);
   }),
@@ -156,10 +159,7 @@ router.delete(
     await Post.deleteMany({ parent: post._id });
 
     // Decrement tag counts
-    await Tag.updateMany(
-      { _id: { $in: post.tags } },
-      { $inc: { questionsCount: -1 } },
-    );
+    await Tag.updateMany({ _id: { $in: post.tags } }, { $inc: { questionsCount: -1 } });
 
     await post.deleteOne();
 
@@ -246,10 +246,7 @@ router.delete(
     if (!answer) throw ApiError.notFound('Answer not found or not authorized');
 
     // Decrement parent's answers count
-    await Post.updateOne(
-      { _id: answer.parent },
-      { $inc: { answersCount: -1 } },
-    );
+    await Post.updateOne({ _id: answer.parent }, { $inc: { answersCount: -1 } });
 
     await answer.deleteOne();
 

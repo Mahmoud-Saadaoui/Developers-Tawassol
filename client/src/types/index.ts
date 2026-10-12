@@ -71,7 +71,8 @@ export interface Post {
   type: 'question' | 'answer';
   title?: string;
   content: string;
-  author: User;
+  /** `null` when the author account no longer exists (orphaned post). */
+  author: User | null;
   parent?: string;
   tags: Tag[];
   votes: Array<{ user: string; value: number }>;

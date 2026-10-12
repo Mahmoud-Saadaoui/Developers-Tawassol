@@ -1,6 +1,7 @@
-import { Avatar, Card, Space, Tag, Typography } from 'antd';
+import { Card, Space, Tag, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import type { User } from '../../types';
+import UserAvatar from '../common/UserAvatar';
 
 const { Text } = Typography;
 
@@ -14,9 +15,7 @@ export default function UserCard({ user }: UserCardProps) {
   return (
     <Card size="small" style={{ marginBottom: 12 }}>
       <Space align="start" style={{ width: '100%' }}>
-        <Avatar size={48} src={user.avatar?.url}>
-          {user.name?.[0]?.toUpperCase()}
-        </Avatar>
+        <UserAvatar size={48} user={user} />
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <Link to={`/users/${user.id}`}>

@@ -11,11 +11,7 @@ export interface AuthRequest extends Request {
  * Reads the JWT from the httpOnly cookie or Authorization header,
  * verifies it, and attaches userId to the request.
  */
-export async function requireAuth(
-  req: AuthRequest,
-  _res: Response,
-  next: NextFunction,
-) {
+export async function requireAuth(req: AuthRequest, _res: Response, next: NextFunction) {
   try {
     const token = getAuthToken(req);
     if (!token) throw ApiError.unauthorized();

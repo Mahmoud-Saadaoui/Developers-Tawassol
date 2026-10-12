@@ -7,7 +7,7 @@ export interface IUser extends mongoose.Document {
   name: string;
   email: string;
   passwordHash: string;
-  provider: 'local' | 'google' | 'github' | 'linkedin';
+  provider: 'local' | 'google' | 'github';
   providerId?: string;
   avatar?: { url: string; publicId: string };
   profile: {
@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema<IUser>(
     passwordHash: { type: String, select: false },
     provider: {
       type: String,
-      enum: ['local', 'google', 'github', 'linkedin'],
+      enum: ['local', 'google', 'github'],
       default: 'local',
     },
     providerId: { type: String },
@@ -117,10 +117,7 @@ export async function hashPassword(plain: string): Promise<string> {
   return bcrypt.hash(plain, 12);
 }
 
-export async function comparePassword(
-  user: IUser,
-  plain: string,
-): Promise<boolean> {
+export async function comparePassword(user: IUser, plain: string): Promise<boolean> {
   if (!user.passwordHash) return false;
   return bcrypt.compare(plain, user.passwordHash);
 }

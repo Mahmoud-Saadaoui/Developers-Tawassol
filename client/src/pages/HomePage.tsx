@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { Button, Empty, Pagination, Segmented, Space, Typography } from 'antd';
+import { Button, Empty, Input, Pagination, Segmented, Space, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useQuestions } from '../hooks/useQuestions';
@@ -18,15 +18,21 @@ export default function HomePage() {
 
   const page = Number(searchParams.get('page') ?? 1);
   const sort = (searchParams.get('sort') as SortOption) ?? 'newest';
+  const search = searchParams.get('search') ?? '';
 
-  const { data, isLoading } = useQuestions({ page, sort });
+  const { data, isLoading } = useQuestions({ page, sort, search: search || undefined });
 
   const handleSort = (value: string) => {
-    setSearchParams({ sort: value, page: '1' });
+    setSearchParams({ sort: value, page: '1', ...(search ? { search } : {}) });
   };
 
   const handlePage = (p: number) => {
-    setSearchParams({ sort, page: String(p) });
+    setSearchParams({ sort, page: String(p), ...(search ? { search } : {}) });
+  };
+
+  const handleSearch = (value: string) => {
+    const term = value.trim();
+    setSearchParams({ sort, page: '1', ...(term ? { search: term } : {}) });
   };
 
   return (
@@ -44,21 +50,29 @@ export default function HomePage() {
         )}
       </Space>
 
-      <Segmented
-        value={sort}
-        onChange={handleSort}
-        options={[
-          { label: t('home.sortNewest'), value: 'newest' },
-          { label: t('home.sortVotes'), value: 'votes' },
-          { label: t('home.sortUnanswered'), value: 'unanswered' },
-        ]}
-        style={{ marginBottom: 16 }}
-      />
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Segmented
+          value={sort}
+          onChange={handleSort}
+          options={[
+            { label: t('home.sortNewest'), value: 'newest' },
+            { label: t('home.sortVotes'), value: 'votes' },
+            { label: t('home.sortUnanswered'), value: 'unanswered' },
+          ]}
+        />
+        <Input.Search
+          defaultValue={search}
+          placeholder={t('home.searchPlaceholder')}
+          allowClear
+          onSearch={handleSearch}
+          style={{ width: 280 }}
+        />
+      </Space>
 
       {isLoading ? (
         <Empty description={t('common.loading')} />
       ) : !data?.items.length ? (
-        <Empty description={t('home.empty')} />
+        <Empty description={t(search ? 'home.noResults' : 'home.empty')} />
       ) : (
         <>
           {data.items.map((q) => (

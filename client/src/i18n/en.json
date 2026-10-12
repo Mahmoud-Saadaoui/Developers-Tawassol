@@ -5,6 +5,7 @@
     "users": "Developers",
     "ask": "Ask a question",
     "myProfile": "My profile",
+    "language": "Language",
     "logout": "Log out",
     "login": "Log in",
     "register": "Sign up",
@@ -24,7 +25,8 @@
     "views": "{count} views",
     "questions": "{count} question(s)",
     "publish": "Publish",
-    "upload": "Upload"
+    "upload": "Upload",
+    "deletedUser": "Deleted user"
   },
   "auth": {
     "loginTitle": "Log in",
@@ -35,7 +37,6 @@
     "registerError": "Sign-up failed",
     "continueGoogle": "Continue with Google",
     "continueGithub": "Continue with GitHub",
-    "continueLinkedin": "Continue with LinkedIn",
     "email": "Email",
     "emailInvalid": "Invalid email",
     "password": "Password",
@@ -55,7 +56,9 @@
     "sortNewest": "Newest",
     "sortVotes": "Top voted",
     "sortUnanswered": "Unanswered",
-    "empty": "No questions yet"
+    "searchPlaceholder": "Search questions…",
+    "empty": "No questions yet",
+    "noResults": "No questions match your search"
   },
   "ask": {
     "title": "Ask a question",

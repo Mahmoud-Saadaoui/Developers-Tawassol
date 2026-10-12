@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { App as AntdApp, Button, Card, Form, Input, Select, Space, Typography } from 'antd';
+import {
+  App as AntdApp,
+  Button,
+  Card,
+  Form,
+  Input,
+  Select,
+  Space,
+  Typography,
+} from 'antd';
 import { useCreateQuestion, useTags } from '../hooks/useQuestions';
 import { useLocale } from '../context/LocaleContext';
 import MarkdownEditor from '../components/common/MarkdownEditor';
@@ -79,11 +88,7 @@ export default function AskPage() {
         </Form.Item>
 
         <Space>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={createQuestion.isPending}
-          >
+          <Button type="primary" htmlType="submit" loading={createQuestion.isPending}>
             {t('common.publish')}
           </Button>
           <Button onClick={() => navigate(-1)}>{t('common.cancel')}</Button>

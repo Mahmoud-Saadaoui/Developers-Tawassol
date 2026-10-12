@@ -1,4 +1,4 @@
-import { Router, type Request, type Response } from 'express';
+import { Router, type Response } from 'express';
 import multer from 'multer';
 import { User } from '../models/User';
 import { ApiError } from '../utils/ApiError';
@@ -6,15 +6,18 @@ import { asyncHandler } from '../utils/asyncHandler';
 import { requireAuth, type AuthRequest } from '../middleware/requireAuth';
 import { deleteImage, uploadImage } from '../services/cloudinaryService';
 
+/** Only safe raster image types are accepted (no SVG: it can embed scripts). */
+const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp'];
+
 // Memory storage → buffer → Cloudinary
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
   fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    if (ALLOWED_MIME.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(ApiError.badRequest('Only image files are allowed'));
+      cb(ApiError.badRequest('Only JPEG, PNG or WebP images are allowed'));
     }
   },
 });

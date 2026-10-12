@@ -6,6 +6,8 @@ export interface ListQuestionsParams {
   limit?: number;
   sort?: 'newest' | 'votes' | 'unanswered';
   tag?: string;
+  /** Full-text search term (matches question title/content). */
+  search?: string;
 }
 
 export const questionsApi = {
@@ -15,6 +17,7 @@ export const questionsApi = {
     if (params.limit) query.set('limit', String(params.limit));
     if (params.sort) query.set('sort', params.sort);
     if (params.tag) query.set('tag', params.tag);
+    if (params.search) query.set('search', params.search);
     return http<PaginatedResponse<Post>>(`/questions?${query}`);
   },
 

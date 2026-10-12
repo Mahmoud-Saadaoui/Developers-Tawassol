@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import { Strategy as LinkedInStrategy } from 'passport-linkedin-oauth2';
 import { env } from './env';
 import { findOrCreateOAuthUser } from '../services/oauthService';
 
@@ -27,9 +26,7 @@ export function configurePassport() {
               provider: 'google',
               providerId: profile.id,
               name: profile.displayName || profile.username || 'User',
-              email:
-                profile.emails?.[0]?.value ??
-                `${profile.id}@google.oauth`,
+              email: profile.emails?.[0]?.value ?? `${profile.id}@google.oauth`,
               avatarUrl: profile.photos?.[0]?.value,
             });
             done(null, user);
@@ -62,47 +59,7 @@ export function configurePassport() {
               provider: 'github',
               providerId: String(profile.id),
               name: profile.displayName || profile.username || 'User',
-              email:
-                profile.emails?.[0]?.value ??
-                `${profile.username}@github.oauth`,
-              avatarUrl: profile.photos?.[0]?.value,
-            });
-            done(null, user);
-          } catch (err) {
-            done(err as Error);
-          }
-        },
-      ),
-    );
-  }
-
-  // ─── LinkedIn ───
-  if (env.oauth.linkedin.clientId && env.oauth.linkedin.clientSecret) {
-    passport.use(
-      new LinkedInStrategy(
-        {
-          clientID: env.oauth.linkedin.clientId,
-          clientSecret: env.oauth.linkedin.clientSecret,
-          callbackURL: `${env.serverUrl}/api/auth/linkedin/callback`,
-          scope: ['r_emailaddress', 'r_liteprofile'],
-        },
-        async (
-          _accessToken: string,
-          _refreshToken: string,
-          profile: any,
-          done: (err: Error | null, user?: unknown) => void,
-        ) => {
-          try {
-            const user = await findOrCreateOAuthUser({
-              provider: 'linkedin',
-              providerId: profile.id,
-              name:
-                profile.displayName ||
-                `${profile.givenName} ${profile.familyName}`.trim() ||
-                'User',
-              email:
-                profile.emails?.[0]?.value ??
-                `${profile.id}@linkedin.oauth`,
+              email: profile.emails?.[0]?.value ?? `${profile.username}@github.oauth`,
               avatarUrl: profile.photos?.[0]?.value,
             });
             done(null, user);

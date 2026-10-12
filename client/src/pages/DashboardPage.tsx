@@ -1,4 +1,15 @@
-import { App as AntdApp, Button, Card, Checkbox, DatePicker, Form, Input, Select, Space, Typography } from 'antd';
+import {
+  App as AntdApp,
+  Button,
+  Card,
+  Checkbox,
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  Space,
+  Typography,
+} from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAuth } from '../context/AuthContext';
@@ -49,7 +60,11 @@ interface ProfileFormValues {
   education?: EducationFormEntry[];
 }
 
-const socialFields: Array<{ name: keyof SocialFormValues; label: string; placeholder: string }> = [
+const socialFields: Array<{
+  name: keyof SocialFormValues;
+  label: string;
+  placeholder: string;
+}> = [
   { name: 'youtube', label: 'YouTube', placeholder: 'https://youtube.com/…' },
   { name: 'twitter', label: 'Twitter / X', placeholder: 'https://x.com/…' },
   { name: 'facebook', label: 'Facebook', placeholder: 'https://facebook.com/…' },
@@ -163,15 +178,27 @@ export default function DashboardPage() {
       >
         <Card title={t('dashboard.general')} style={{ marginBottom: 16 }}>
           <Space direction="vertical" style={{ width: '100%' }} size={0}>
-            <Form.Item name="headline" label={t('dashboard.headline')} rules={[{ max: 140 }]}>
+            <Form.Item
+              name="headline"
+              label={t('dashboard.headline')}
+              rules={[{ max: 140 }]}
+            >
               <Input placeholder={t('dashboard.headlinePlaceholder')} />
             </Form.Item>
 
             <Space size={16} style={{ width: '100%' }} align="start">
-              <Form.Item name="location" label={t('dashboard.location')} style={{ width: '50%' }}>
+              <Form.Item
+                name="location"
+                label={t('dashboard.location')}
+                style={{ width: '50%' }}
+              >
                 <Input placeholder={t('dashboard.locationPlaceholder')} />
               </Form.Item>
-              <Form.Item name="github" label={t('dashboard.github')} style={{ width: '50%' }}>
+              <Form.Item
+                name="github"
+                label={t('dashboard.github')}
+                style={{ width: '50%' }}
+              >
                 <Input placeholder="Ex: saadouli" />
               </Form.Item>
             </Space>
@@ -216,30 +243,46 @@ export default function DashboardPage() {
                 {fields.map((field) => (
                   <div
                     key={field.key}
-                    style={{ border: '1px solid #f0f0f0', borderRadius: 8, padding: 16, marginBottom: 12 }}
+                    style={{
+                      border: '1px solid #f0f0f0',
+                      borderRadius: 8,
+                      padding: 16,
+                      marginBottom: 12,
+                    }}
                   >
-                    <Space align="start" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Text strong>{t('dashboard.experienceItem', { index: field.name + 1 })}</Text>
+                    <Space
+                      align="start"
+                      style={{ display: 'flex', justifyContent: 'space-between' }}
+                    >
+                      <Text strong>
+                        {t('dashboard.experienceItem', { index: field.name + 1 })}
+                      </Text>
                       {fields.length > 1 && (
                         <Button
                           type="text"
                           danger
                           icon={<MinusCircleOutlined />}
                           onClick={() => remove(field.name)}
-                          aria-label={t('dashboard.removePosition', { index: field.name + 1 })}
+                          aria-label={t('dashboard.removePosition', {
+                            index: field.name + 1,
+                          })}
                         />
                       )}
                     </Space>
 
                     <Form.Item
                       name={[field.name, 'title']}
-                      rules={[{ required: true, message: t('dashboard.positionTitleRequired') }]}
+                      rules={[
+                        { required: true, message: t('dashboard.positionTitleRequired') },
+                      ]}
                     >
                       <Input placeholder={t('dashboard.positionTitle')} />
                     </Form.Item>
                     <Form.Item
                       name={[field.name, 'company']}
-                      rules={[{ required: true, message: t('dashboard.companyRequired') }]}
+                      rules={[
+                        { required: true, message: t('dashboard.companyRequired') },
+                      ]}
                     >
                       <Input placeholder={t('dashboard.company')} />
                     </Form.Item>
@@ -264,7 +307,11 @@ export default function DashboardPage() {
                         }
                       >
                         {({ getFieldValue }) => {
-                          const isCurrent = getFieldValue(['experience', field.name, 'current']);
+                          const isCurrent = getFieldValue([
+                            'experience',
+                            field.name,
+                            'current',
+                          ]);
                           return (
                             <Form.Item
                               name={[field.name, 'to']}
@@ -272,22 +319,38 @@ export default function DashboardPage() {
                               rules={
                                 isCurrent
                                   ? []
-                                  : [{ required: true, message: t('dashboard.toRequired') }]
+                                  : [
+                                      {
+                                        required: true,
+                                        message: t('dashboard.toRequired'),
+                                      },
+                                    ]
                               }
                             >
-                              <DatePicker picker="month" placeholder={t('dashboard.to')} disabled={!!isCurrent} />
+                              <DatePicker
+                                picker="month"
+                                placeholder={t('dashboard.to')}
+                                disabled={!!isCurrent}
+                              />
                             </Form.Item>
                           );
                         }}
                       </Form.Item>
 
-                      <Form.Item name={[field.name, 'current']} valuePropName="checked" label=" ">
+                      <Form.Item
+                        name={[field.name, 'current']}
+                        valuePropName="checked"
+                        label=" "
+                      >
                         <Checkbox>{t('dashboard.current')}</Checkbox>
                       </Form.Item>
                     </Space>
 
                     <Form.Item name={[field.name, 'description']}>
-                      <Input.TextArea rows={2} placeholder={t('dashboard.positionDescription')} />
+                      <Input.TextArea
+                        rows={2}
+                        placeholder={t('dashboard.positionDescription')}
+                      />
                     </Form.Item>
                   </div>
                 ))}
@@ -307,17 +370,29 @@ export default function DashboardPage() {
                 {fields.map((field) => (
                   <div
                     key={field.key}
-                    style={{ border: '1px solid #f0f0f0', borderRadius: 8, padding: 16, marginBottom: 12 }}
+                    style={{
+                      border: '1px solid #f0f0f0',
+                      borderRadius: 8,
+                      padding: 16,
+                      marginBottom: 12,
+                    }}
                   >
-                    <Space align="start" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Text strong>{t('dashboard.educationItem', { index: field.name + 1 })}</Text>
+                    <Space
+                      align="start"
+                      style={{ display: 'flex', justifyContent: 'space-between' }}
+                    >
+                      <Text strong>
+                        {t('dashboard.educationItem', { index: field.name + 1 })}
+                      </Text>
                       {fields.length > 1 && (
                         <Button
                           type="text"
                           danger
                           icon={<MinusCircleOutlined />}
                           onClick={() => remove(field.name)}
-                          aria-label={t('dashboard.removeDegree', { index: field.name + 1 })}
+                          aria-label={t('dashboard.removeDegree', {
+                            index: field.name + 1,
+                          })}
                         />
                       )}
                     </Space>
@@ -331,14 +406,21 @@ export default function DashboardPage() {
                     <Space size={16} style={{ width: '100%' }} align="start">
                       <Form.Item
                         name={[field.name, 'degree']}
-                        rules={[{ required: true, message: t('dashboard.degreeRequired') }]}
+                        rules={[
+                          { required: true, message: t('dashboard.degreeRequired') },
+                        ]}
                         style={{ width: '50%' }}
                       >
                         <Input placeholder={t('dashboard.degree')} />
                       </Form.Item>
                       <Form.Item
                         name={[field.name, 'fieldofstudy']}
-                        rules={[{ required: true, message: t('dashboard.fieldofstudyRequired') }]}
+                        rules={[
+                          {
+                            required: true,
+                            message: t('dashboard.fieldofstudyRequired'),
+                          },
+                        ]}
                         style={{ width: '50%' }}
                       >
                         <Input placeholder={t('dashboard.fieldofstudy')} />
@@ -362,7 +444,11 @@ export default function DashboardPage() {
                         }
                       >
                         {({ getFieldValue }) => {
-                          const isCurrent = getFieldValue(['education', field.name, 'current']);
+                          const isCurrent = getFieldValue([
+                            'education',
+                            field.name,
+                            'current',
+                          ]);
                           return (
                             <Form.Item
                               name={[field.name, 'to']}
@@ -370,22 +456,38 @@ export default function DashboardPage() {
                               rules={
                                 isCurrent
                                   ? []
-                                  : [{ required: true, message: t('dashboard.toRequired') }]
+                                  : [
+                                      {
+                                        required: true,
+                                        message: t('dashboard.toRequired'),
+                                      },
+                                    ]
                               }
                             >
-                              <DatePicker picker="month" placeholder={t('dashboard.to')} disabled={!!isCurrent} />
+                              <DatePicker
+                                picker="month"
+                                placeholder={t('dashboard.to')}
+                                disabled={!!isCurrent}
+                              />
                             </Form.Item>
                           );
                         }}
                       </Form.Item>
 
-                      <Form.Item name={[field.name, 'current']} valuePropName="checked" label=" ">
+                      <Form.Item
+                        name={[field.name, 'current']}
+                        valuePropName="checked"
+                        label=" "
+                      >
                         <Checkbox>{t('dashboard.currentStudy')}</Checkbox>
                       </Form.Item>
                     </Space>
 
                     <Form.Item name={[field.name, 'description']}>
-                      <Input.TextArea rows={2} placeholder={t('dashboard.educationDescription')} />
+                      <Input.TextArea
+                        rows={2}
+                        placeholder={t('dashboard.educationDescription')}
+                      />
                     </Form.Item>
                   </div>
                 ))}

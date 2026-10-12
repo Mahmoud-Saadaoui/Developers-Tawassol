@@ -23,16 +23,12 @@ router.post(
     const post = await Post.findById(postId);
     if (!post) throw ApiError.notFound('Post not found');
 
-    const existingVote = post.votes.find(
-      (v) => v.user.toString() === req.userId,
-    );
+    const existingVote = post.votes.find((v) => v.user.toString() === req.userId);
 
     if (existingVote) {
       if (existingVote.value === value) {
         // Toggle off — remove vote
-        post.votes = post.votes.filter(
-          (v) => v.user.toString() !== req.userId,
-        );
+        post.votes = post.votes.filter((v) => v.user.toString() !== req.userId);
         post.votesTotal -= value;
       } else {
         // Change vote
@@ -59,15 +55,11 @@ router.delete(
     const post = await Post.findById(req.params.postId);
     if (!post) throw ApiError.notFound('Post not found');
 
-    const vote = post.votes.find(
-      (v) => v.user.toString() === req.userId,
-    );
+    const vote = post.votes.find((v) => v.user.toString() === req.userId);
 
     if (!vote) throw ApiError.badRequest('No vote to remove');
 
-    post.votes = post.votes.filter(
-      (v) => v.user.toString() !== req.userId,
-    );
+    post.votes = post.votes.filter((v) => v.user.toString() !== req.userId);
     post.votesTotal -= vote.value;
 
     await post.save();

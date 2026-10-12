@@ -11,6 +11,7 @@ import { LocaleProvider, useLocale } from './context/LocaleContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import enUS from 'antd/locale/en_US';
 import arEG from 'antd/locale/ar_EG';
+import { brand } from './theme';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -22,26 +23,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-/** Brand tokens — Tawassol (تواصل) : connection / communication. */
-const brand = {
-  light: {
-    colorPrimary: '#4f46e5',
-    colorInfo: '#4f46e5',
-    colorLink: '#4f46e5',
-    borderRadius: 8,
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans Arabic', 'Tahoma', sans-serif",
-  },
-  dark: {
-    colorPrimary: '#818cf8',
-    colorInfo: '#818cf8',
-    colorLink: '#818cf8',
-    borderRadius: 8,
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans Arabic', 'Tahoma', sans-serif",
-  },
-};
 
 /**
  * Reads the active locale/theme and renders the antd ConfigProvider.

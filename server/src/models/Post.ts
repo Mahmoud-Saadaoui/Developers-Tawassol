@@ -21,7 +21,12 @@ const postSchema = new mongoose.Schema<IPost>(
     type: { type: String, enum: ['question', 'answer'], required: true },
     title: { type: String, maxlength: 200 },
     content: { type: String, required: true },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
     parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
     votes: [

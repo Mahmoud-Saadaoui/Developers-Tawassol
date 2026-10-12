@@ -1,10 +1,5 @@
 import { Router, type Request, type Response } from 'express';
-import {
-  User,
-  hashPassword,
-  comparePassword,
-  toSafeJSON,
-} from '../models/User';
+import { User, hashPassword, comparePassword, toSafeJSON } from '../models/User';
 import { ApiError } from '../utils/ApiError';
 import { asyncHandler } from '../utils/asyncHandler';
 import { setAuthCookie, clearAuthCookie } from '../utils/cookies';
